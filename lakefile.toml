@@ -1,22 +1,20 @@
 name = "workspace"
-defaultTargets = ["Blueprint"]
 
-# The blueprint chapters ARE Lake source: content/blueprint/*.lean are literate
-# chapters (prose in /-! -/ doc blocks, real declarations between them), rendered
-# by Quartz and typechecked by Lake from the same files. Lean chapter filenames
-# must be valid module identifiers (e.g. Ch01_SumsOfOddNumbers); list each new
-# lean chapter in `roots` below (and in content/blueprint/_meta.json for nav).
+# Companion workspace for thefundamentaltheor3m/Sphere-Packing-Lean: the Lean
+# code stays upstream and is brought in as a pinned dependency (the "depend on
+# it" path in docs/tutorial/quick-start/work-on-external-project.md). Blueprint
+# chapters under content/blueprint/ are markdown reference chapters whose items
+# carry lean="..." pointing at upstream declarations.
 #
-# The demo has no dependencies so the build takes seconds. Real projects: add
-#   [[require]]
-#   name = "mathlib"
-#   scope = "leanprover-community"
-# and bump lean-toolchain to match.
+# No defaultTargets: the dependency is not a root-package target. Build its
+# modules explicitly, one +Module per blueprint.config.json lakeRoots entry:
+#   lake exe cache get        # prebuilt mathlib (upstream pins rev v4.30.0)
+#   lake build +SpherePacking
 
-[[lean_lib]]
-name = "Blueprint"
-srcDir = "content/blueprint"
-roots = ["Ch01_SumsOfOddNumbers"]
+[[require]]
+name = "SpherePacking"
+git = "https://github.com/thefundamentaltheor3m/Sphere-Packing-Lean"
+rev = "d80a24cbadf0ad5002b78d9c278c6f54b0d42d71"
 
 [[lean_exe]]
 name = "blueprint-data"

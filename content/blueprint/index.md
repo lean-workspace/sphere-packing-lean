@@ -1,29 +1,28 @@
 ---
-title: "Demo proof"
-description: "Blueprint-as-source demo: literate Lean chapters + markdown plan chapters, statuses computed from the kernel."
+title: "Sphere Packing blueprint"
+description: "Companion blueprint for thefundamentaltheor3m/Sphere-Packing-Lean — reference chapters over the upstream Lean library, statuses computed from the kernel."
 type: "blueprint-index"
 tags:
   - "blueprint"
 ---
 
-This blueprint **is** its own source: the files in this folder are simultaneously
-the plan, the prose, and (for formalized chapters) the actual Lean code that
-`lake build` typechecks.
+Companion blueprint for
+[Sphere-Packing-Lean](https://github.com/thefundamentaltheor3m/Sphere-Packing-Lean),
+the Lean 4 formalization of Viazovska's solution to the sphere packing
+problem in dimension 8.
 
-**[→ Dependency graph (canvas)](dep-graph.canvas)**
-
-## Chapters
-
-- [Sums of odd numbers](ch01_sumsofoddnumbers) — literate Lean chapter (`Ch01_SumsOfOddNumbers.lean`): real declarations interleaved with prose
-- [Further sums](02-further-sums) — plan-stage markdown chapter (no code yet)
-
-## How it works
-
-- Chapter statuses are computed from the Lean kernel (`blueprint-data.json`,
-  written by `lake exe blueprint-data`) — a node is dark green only when its
-  proof *and everything it depends on* compile without `sorry`.
-- Edit a chapter file and save: the page hot-reloads. Statuses refresh after:
+The Lean code lives upstream and is pinned as a Lake dependency; chapters here
+are reference chapters whose items point at upstream declarations with
+`lean="..."`. Statuses, dependency edges, and source snippets are recomputed
+from the compiled environment on every sync — nothing here is hand-maintained:
 
 ```bash
-lake build && npm run blueprint:sync
+lake exe cache get        # prebuilt mathlib (upstream pins rev v4.30.0)
+lake build +SpherePacking # compile the upstream library
+npm run blueprint:sync    # extract kernel truth + regenerate the canvas
 ```
+
+The original leanblueprint site remains at
+[thefundamentaltheor3m.github.io/Sphere-Packing-Lean/blueprint](https://thefundamentaltheor3m.github.io/Sphere-Packing-Lean/blueprint/).
+This workspace starts with a scaffold chapter on sphere packings and their
+density; the remaining chapters are being migrated.

@@ -5,8 +5,9 @@
       "root": "blueprint",
       "source": { "type": "dir" },
       "pageMode": "chapter",
-      "lakeRoots": ["Ch01_SumsOfOddNumbers"],
-      "repo": "self-evolving/lean-workspace-template"
+      "lakeRoots": ["SpherePacking"],
+      "leanSrcDirs": [".lake/packages/SpherePacking"],
+      "repo": "thefundamentaltheor3m/Sphere-Packing-Lean"
     }
   ]
 }
