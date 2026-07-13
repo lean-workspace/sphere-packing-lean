@@ -22,7 +22,10 @@ $$
 \begin{equation*}\widehat{f}(x)\geq0\mbox{ for all } x\in\mathbb{R}^d.\end{equation*}
 $$
 
-  Then the density of any $\Lambda$-periodic sphere packing is bounded above by $$\frac{f(0)}{\widehat{f}(0)}\cdot \mathrm{vol}(B_d(0,1/2)).$$
+  Then the density of any $\Lambda$-periodic sphere packing is bounded above by 
+$$
+\frac{f(0)}{\widehat{f}(0)}\cdot \mathrm{vol}(B_d(0,1/2)).
+$$
 
 ### Proof {uses="thm:Poisson-summation-formula"}
 
@@ -37,10 +40,18 @@ $$
 
 follows from the condition (eqn:Cohn-Elkies-condition-1) of the theorem and the assumption on the distances between points in $X$.
 The equality
-$$\sum_{x\in X/\Lambda}\sum_{y\in X/\Lambda}\sum_{\ell\in  \Lambda}f(x-y+l)=\sum_{x\in X/\Lambda}\sum_{y\in X/\Lambda}\frac{1}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\,\sum_{m\in \Lambda^*} \widehat{f}(m)\,e^{2\pi i m(x-y)}.$$
+
+$$
+\sum_{x\in X/\Lambda}\sum_{y\in X/\Lambda}\sum_{\ell\in  \Lambda}f(x-y+l)=\sum_{x\in X/\Lambda}\sum_{y\in X/\Lambda}\frac{1}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\,\sum_{m\in \Lambda^*} \widehat{f}(m)\,e^{2\pi i m(x-y)}.
+$$
+
 follows from the Poisson summation formula.
 The right hand side of the above equation can be written as
-$$\sum_{x\in X/\Lambda}\sum_{y\in X/\Lambda}\frac{1}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\,\sum_{m\in \Lambda^*} \widehat{f}(m)\,e^{2\pi i m(x-y)}=\frac{1}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\,\sum_{m\in \Lambda^*} \widehat{f}(m)\cdot\big|\sum_{x\in X/\Lambda}e^{2\pi i m x}\big|^2.$$
+
+$$
+\sum_{x\in X/\Lambda}\sum_{y\in X/\Lambda}\frac{1}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\,\sum_{m\in \Lambda^*} \widehat{f}(m)\,e^{2\pi i m(x-y)}=\frac{1}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\,\sum_{m\in \Lambda^*} \widehat{f}(m)\cdot\big|\sum_{x\in X/\Lambda}e^{2\pi i m x}\big|^2.
+$$
+
 Note that $\big|\sum_{x\in X/\Lambda}e^{2\pi i m x}\big|^2\geq0$ for all $m\in\Lambda^*$. Moreover,  the term corresponding to $m=0$ satisfies $\big|\sum_{x\in X/\Lambda}e^{2\pi i 0 x}\big|^2=\sharp (X/\Lambda)^2$.
 Now we use the condition (eqn:Cohn-Elkies-condition-2) and estimate
 
@@ -51,15 +62,26 @@ $$
 $$
 
 Comparing inequalities (eqn: sharp X 1) and (eqn: sharp X 2) we arrive at
-$$\frac{\sharp (X/\Lambda)}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\leq \frac{f(0)}{\widehat{f}(0)}.$$
+
+$$
+\frac{\sharp (X/\Lambda)}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\leq \frac{f(0)}{\widehat{f}(0)}.
+$$
+
 Now we see that the density of the periodic packing $\mathcal{P}_X$ with balls of radius $1/2$ is bounded by
-$$\Delta(\mathcal{P}_X)=\frac{\sharp (X/\Lambda)}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\cdot{\mathrm{vol}(B_d(0,1/2))}\leq
-\frac{f(0)}{\widehat{f}(0)}\cdot \mathrm{vol}(B_d(0,1/2)).$$
+
+$$
+\Delta(\mathcal{P}_X)=\frac{\sharp (X/\Lambda)}{\mathrm{vol}(\mathbb{R}^d/\Lambda)}\cdot{\mathrm{vol}(B_d(0,1/2))}\leq
+\frac{f(0)}{\widehat{f}(0)}\cdot \mathrm{vol}(B_d(0,1/2)).
+$$
+
 This finishes the proof of the theorem for periodic packings.
 
 ## Theorem: Cohn--Elkies {\cite{ElkiesCohn}} {#thm:Cohn-Elkies-general lean="LinearProgrammingBound"}
 
-Let $f:\mathbb{R}^d\to\mathbb{R}$ be a Schwartz function that is not identically zero and satisfies (eqn:Cohn-Elkies-condition-1) and (eqn:Cohn-Elkies-condition-2). Then the density of any $\Lambda$-periodic sphere packing is bounded above by $$\frac{f(0)}{\widehat{f}(0)}\cdot \mathrm{vol}(B_d(0,1/2)).$$
+Let $f:\mathbb{R}^d\to\mathbb{R}$ be a Schwartz function that is not identically zero and satisfies (eqn:Cohn-Elkies-condition-1) and (eqn:Cohn-Elkies-condition-2). Then the density of any $\Lambda$-periodic sphere packing is bounded above by 
+$$
+\frac{f(0)}{\widehat{f}(0)}\cdot \mathrm{vol}(B_d(0,1/2)).
+$$
 
 ### Proof {uses="thm:Cohn-Elkies-periodic, thm:periodic-packing-optimal"}
 

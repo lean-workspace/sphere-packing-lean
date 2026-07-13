@@ -350,7 +350,11 @@ Finally, we are ready to prove [g](#thm:g).
 ## Theorem: g1 {#thm:g1 uses="prop:a-fourier, prop:b-fourier, prop:a-double-zeros, prop:b-double-zeros, prop:ineqA, prop:ineqB, prop:a0, prop:b0"}
 
 The function
-$$g(x):=\frac{\pi\,i}{8640}a(x)+\frac{i}{240\pi}\,b(x)$$
+
+$$
+g(x):=\frac{\pi\,i}{8640}a(x)+\frac{i}{240\pi}\,b(x)
+$$
+
 satisfies conditions (eqn:g1)--(eqn:g3).
 
 ### Proof
@@ -361,7 +365,11 @@ $$
 \begin{equation*} g(r)=\frac{\pi}{2160}\,\sin(\pi r^2/2)^2\,\int\limits_0^\infty A(t)\,e^{-\pi r^2 t}\,dt\end{equation*}
 $$
 
-where $$A(t)=-t^2\phi_0(i/t)-\frac{36}{\pi^2}\,\psi_I(it).$$
+where 
+$$
+A(t)=-t^2\phi_0(i/t)-\frac{36}{\pi^2}\,\psi_I(it).
+$$
+
 from the [ineqA](#prop:ineqA) we know that $A(t)<0\quad\mbox{for}\;t\in(0,\infty).$
 Therefore identity (eqn:g A) implies (eqn:g1).
 
@@ -371,7 +379,10 @@ $$
 \begin{equation*} \widehat{g}(r)=\frac{\pi}{2160}\,\sin(\pi r^2/2)^2\,\int\limits_0^\infty B(t)\,e^{-\pi r^2 t}\,dt\end{equation*}
 $$
 
-where $$B(t)=-t^2\phi_0(i/t)+\frac{36}{\pi^2}\,\psi_I(it).$$
+where 
+$$
+B(t)=-t^2\phi_0(i/t)+\frac{36}{\pi^2}\,\psi_I(it).
+$$
 
 Finally, the property (eqn:g3) readily follows from [a0](#prop:a0) and [b0](#prop:b0).
 This finishes the proof of Theorems [g1](#thm:g1) and [g](#thm:g).

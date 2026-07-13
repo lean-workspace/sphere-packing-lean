@@ -152,7 +152,10 @@ Now that we have simplified the process of computing the packing densities of sp
 ## Definition: Periodic-sphere-packing-constant {#def:Periodic-sphere-packing-constant lean="PeriodicSpherePackingConstant" uses="SpherePacking.density, PeriodicSpherePacking"}
 
 The periodic sphere packing constant is defined to be
-    $$ \Delta_{d}^{\text{periodic}} := \sup_{\substack{P \subset \mathbb{R}^d \\ \text{periodic packing}}} \Delta_P$$
+    
+$$
+\Delta_{d}^{\text{periodic}} := \sup_{\substack{P \subset \mathbb{R}^d \\ \text{periodic packing}}} \Delta_P
+$$
 
 ## Theorem: periodic-packing-optimal {#thm:periodic-packing-optimal lean="periodic_constant_eq_constant" uses="SpherePacking.density, def:Periodic-sphere-packing-constant"}
 

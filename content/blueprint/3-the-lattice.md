@@ -13,7 +13,10 @@ There are several equivalent definitions of the $E_8$ lattice. Below, we formali
 
 {($E_8$-lattice, Definition 1)}
   We define the _$E_8$-lattice_ (as a subset of $\mathbb{R}^8$) to be
-$$\Lambda_8=\{(x_i)\in\mathbb{Z}^8\cup(\mathbb{Z}+\textstyle\frac12\displaystyle )^8|\;\sum_{i=1}^8x_i\equiv 0\;(\mathrm{mod\;2})\}.$$
+
+$$
+\Lambda_8=\{(x_i)\in\mathbb{Z}^8\cup(\mathbb{Z}+\textstyle\frac12\displaystyle )^8|\;\sum_{i=1}^8x_i\equiv 0\;(\mathrm{mod\;2})\}.
+$$
 
 ## Definition: E8-Matrix {#E8-Matrix lean="E8Matrix"}
 

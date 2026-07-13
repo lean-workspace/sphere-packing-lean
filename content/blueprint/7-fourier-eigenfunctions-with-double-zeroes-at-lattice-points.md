@@ -274,21 +274,28 @@ $$
 
 We only prove the bound for $I_1(r)$, as the other two are similar.
     By the change of variable $z = -1 + i t$ for $t \in [0,1]$, we have
-    $$
-    I_1(r) = -i \int_0^1 \phi_0\left(\frac{-1}{i t}\right) t^2 e^{-\pi i r} \cdot e^{-\pi r t} \, \mathrm{d} t.
-    $$
+    
+$$
+I_1(r) = -i \int_0^1 \phi_0\left(\frac{-1}{i t}\right) t^2 e^{-\pi i r} \cdot e^{-\pi r t} \, \mathrm{d} t.
+$$
+
     With the change of variable $s = 1 / t$, we get
-    $$
-    I_1(r) = i \int_1^{\infty} \phi_0(i s) \cdot s^{-4} \cdot e^{-\pi i r} \cdot e^{-\pi r / s} \, \mathrm{d} s
-    $$
+    
+$$
+I_1(r) = i \int_1^{\infty} \phi_0(i s) \cdot s^{-4} \cdot e^{-\pi i r} \cdot e^{-\pi r / s} \, \mathrm{d} s
+$$
+
     and the absolute value can be bounded as
-    $$
-    |I_1(r)| \leq \int_1^{\infty} |\phi_0(i s)| \cdot s^{-4} \cdot |e^{-\pi i r}| \cdot e^{-\pi r / s} \, \mathrm{d} s \le \int_1^{\infty} |\phi_0(is)| \cdot e^{-\pi r / s} \, \mathrm{d} s.
-    $$
+    
+$$
+|I_1(r)| \leq \int_1^{\infty} |\phi_0(i s)| \cdot s^{-4} \cdot |e^{-\pi i r}| \cdot e^{-\pi r / s} \, \mathrm{d} s \le \int_1^{\infty} |\phi_0(is)| \cdot e^{-\pi r / s} \, \mathrm{d} s.
+$$
+
     Now, [phi0-bound](#cor:phi0-bound) shows
-    $$
-    |I_1(r)| \leq C_0 \int_1^{\infty} e^{-2\pi s} \, e^{-\pi r / s} \, \mathrm{d} s.
-    $$
+    
+$$
+|I_1(r)| \leq C_0 \int_1^{\infty} e^{-2\pi s} \, e^{-\pi r / s} \, \mathrm{d} s.
+$$
 
 Combined with [integral-bound](#lem:integral-bound), this shows that the integrals $I_1$, $I_3$, and $I_5$ decay faster than any polynomial as $r \to \infty$.
 For the integrals $I_2$, $I_4$, and $I_6$, it is easier to see this since the contours are not touching the real axis.
@@ -314,23 +321,30 @@ $$
 ### Proof
 
 For $I_2(r)$, parametrize $z$ as $z = t + i$ for $t \in [-1,0]$, and we have
-    $$
-        I_2(r) = \int_{-1}^0 \phi_0\left(\frac{-1}{t + 1 + i}\right) (t + 1 + i)^2 e^{\pi i r t} e^{-\pi r} \, \mathrm{d} t.
-    $$
+    
+$$
+I_2(r) = \int_{-1}^0 \phi_0\left(\frac{-1}{t + 1 + i}\right) (t + 1 + i)^2 e^{\pi i r t} e^{-\pi r} \, \mathrm{d} t.
+$$
+
     Since the function $z \mapsto \phi_0\left(\frac{-1}{z+1}\right) (z+1)^2$ is holomorphic and bounded on the contour,
     there exists $C > 0$ such that $|\phi_0\left(\frac{-1}{z+1}\right) (z + 1)^2| \leq C$, and the absolute value of the integral can be bounded by
-    $$
-        |I_2(r)| \le \int_{-1}^{0} C e^{-\pi r} \, \mathrm{d} t = C e^{-\pi r}.
-    $$
+    
+$$
+|I_2(r)| \le \int_{-1}^{0} C e^{-\pi r} \, \mathrm{d} t = C e^{-\pi r}.
+$$
+
     The bound for $I_4(r)$ is similar.
     For $I_6(r)$, parametrize $z$ as $z = i t$ for $t \in [1, \infty)$, and we have
-    $$
-        I_6(r) = 2 i \int_1^{\infty} \phi_0(i t) e^{-\pi r t} \, \mathrm{d} t
-    $$
+    
+$$
+I_6(r) = 2 i \int_1^{\infty} \phi_0(i t) e^{-\pi r t} \, \mathrm{d} t
+$$
+
     and the absolute value can be bounded as (using [phi0-bound](#cor:phi0-bound))
-    $$
-        |I_6(r)| \leq 2 \int_1^{\infty} |\phi_0(i t)| e^{-\pi r t} \, \mathrm{d} t \leq \frac{2C_0}{\pi} \int_1^{\infty} e^{-2\pi t} e^{-\pi r t} \, \mathrm{d} t = \frac{2C_0}{\pi} \frac{e^{-\pi (r + 2)}}{r + 2}.
-    $$
+    
+$$
+|I_6(r)| \leq 2 \int_1^{\infty} |\phi_0(i t)| e^{-\pi r t} \, \mathrm{d} t \leq \frac{2C_0}{\pi} \int_1^{\infty} e^{-2\pi t} e^{-\pi r t} \, \mathrm{d} t = \frac{2C_0}{\pi} \frac{e^{-\pi (r + 2)}}{r + 2}.
+$$
 
 Combining these, one can show that $a$ is a Schwartz function.
 
@@ -498,7 +512,11 @@ The integral converges absolutely for all $r\in\mathbb{R}_{\geq 0}$.
 ### Proof
 
 Suppose that $r>\sqrt{2}$. Then by [a-double-zeros](#prop:a-double-zeros)
-$$a(r)=4i\,\sin(\pi r^2/2)^2\,\int\limits_{0}^{\infty}\phi_0(i/t)\,t^2\,e^{-\pi r^2 t}\,dt. $$
+
+$$
+a(r)=4i\,\sin(\pi r^2/2)^2\,\int\limits_{0}^{\infty}\phi_0(i/t)\,t^2\,e^{-\pi r^2 t}\,dt.
+$$
+
 From (eqn:phi0-trans-S) we obtain
 
 $$
@@ -761,7 +779,10 @@ $$
 $$
 
 Now from (eqn:b-definition) we see that
-$$ \mathcal{F}(b)(x)=-b(x). $$
+
+$$
+\mathcal{F}(b)(x)=-b(x).
+$$
 
 Now we regard the radial function $b$ as a function on $\mathbb{R}_{\geq0}$. We check that $b$ has double roots at $\Lambda_8$-points.
 
@@ -804,8 +825,12 @@ $$
 We denote the right hand side of (eqn: b double zeroes) by $c(r)$.
 By Corollary [psiI-near-0-infty](#cor:psiI-near-0-infty), the integral in (eqn: b double zeroes) converges for $r>\sqrt{2}$.
 Then we rewrite it in the following way:
-$$c(r)=\int\limits_{-1}^{i\infty-1}\psi_I(z+1)\,e^{\pi i r^2 \,z}\,dz-2\int\limits_{0}^{i\infty}\psi_I(z)\,e^{\pi i r^2 \,z}\,dz+
-\int\limits_{1}^{i\infty+1}\psi_I(z-1)\,e^{\pi i r^2 \,z}\,dz.$$
+
+$$
+c(r)=\int\limits_{-1}^{i\infty-1}\psi_I(z+1)\,e^{\pi i r^2 \,z}\,dz-2\int\limits_{0}^{i\infty}\psi_I(z)\,e^{\pi i r^2 \,z}\,dz+
+\int\limits_{1}^{i\infty+1}\psi_I(z-1)\,e^{\pi i r^2 \,z}\,dz.
+$$
+
 From the Fourier expansion (eqn: psi fourier I) we know that $\psi_I(z)=e^{-2\pi i z}+O(1)$ as $\Im(z)\to\infty$.
 By assumption $r^2>2$, hence we can deform the path of integration and write
 
@@ -841,9 +866,16 @@ $$
 $$
 
 Note that $ST^2S$ belongs to $\Gamma_0(2)$. Thus, since $h\in M^!_{-2}\Gamma_0(2)$ we get
-$$\psi_T+\psi_S=h|_{-2}T-h|_{-2}STS. $$
+
+$$
+\psi_T+\psi_S=h|_{-2}T-h|_{-2}STS.
+$$
+
 Now we observe that $T$ and $STS(ST)^{-1}$ are also in $\Gamma_0(2)$. Therefore,
-$$\psi_T+\psi_S=h|_{-2}T-h|_{-2}STS=h|_{-2}-h|ST=\psi_I.$$
+
+$$
+\psi_T+\psi_S=h|_{-2}T-h|_{-2}STS=h|_{-2}-h|ST=\psi_I.
+$$
 
 Combining (eqn: c1) and (eqn: c2) we find
 
@@ -871,7 +903,11 @@ The integral converges absolutely for all $r\in\mathbb{R}_{\geq 0}$.
 
 The proof is analogous to the proof of [a-another-integral](#prop:a-another-integral).
 First, suppose that $r>\sqrt{2}$. Then by [b-double-zeros](#prop:b-double-zeros)
-$$b(r)=4i\,\sin(\pi r^2/2)^2\,\int\limits_{0}^{\infty}\psi_I(it)\,e^{-\pi r^2 t}\,dt. $$
+
+$$
+b(r)=4i\,\sin(\pi r^2/2)^2\,\int\limits_{0}^{\infty}\psi_I(it)\,e^{-\pi r^2 t}\,dt.
+$$
+
 From (eqn: psi fourier I) we obtain
 
 $$
