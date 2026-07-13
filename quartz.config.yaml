@@ -115,10 +115,11 @@ plugins:
     options:
       renderEngine: katex
     order: 35
-  # Citations machinery disabled: this repo renders Lean blueprints, not literature
-  # notes with a BibTeX bibliography.
+  # Citations enabled: the migrated blueprint cites its mathematical sources
+  # ([@key] pandoc syntax), resolved against ./bibliography.bib (converted from
+  # the upstream thebibliography block).
   - source: github:quartz-community/citations
-    enabled: false
+    enabled: true
     options:
       bibliographyFile: ./bibliography.bib
       suppressBibliography: false

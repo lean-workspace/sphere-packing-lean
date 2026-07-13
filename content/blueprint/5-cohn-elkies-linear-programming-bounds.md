@@ -5,9 +5,9 @@ tags:
   - "blueprint"
 ---
 
-In 2003 Cohn and Elkies [ElkiesCohn]  developed  linear programming bounds that apply directly to sphere packings. The goal of this section is to formalize the Cohn--Elkies linear programming bound.
+In 2003 Cohn and Elkies [@ElkiesCohn]  developed  linear programming bounds that apply directly to sphere packings. The goal of this section is to formalize the Cohn--Elkies linear programming bound.
 
-The following theorem is the key result of [ElkiesCohn]. (Note that the original theorem is stated for a class of functions more general then Schwartz functions.)
+The following theorem is the key result of [@ElkiesCohn]. (Note that the original theorem is stated for a class of functions more general then Schwartz functions.)
 
 ## Theorem: Cohn--Elkies {\cite{ElkiesCohn}} {#thm:Cohn-Elkies-periodic lean="LinearProgrammingBound'" uses="def:Fourier-Transform, SpherePacking.density"}
 
@@ -29,7 +29,7 @@ $$
 
 ### Proof {uses="thm:Poisson-summation-formula"}
 
-Here we reproduce the proof given in [ElkiesCohn].
+Here we reproduce the proof given in [@ElkiesCohn].
 
 The inequality
 
@@ -85,7 +85,7 @@ $$
 
 ### Proof {uses="thm:Cohn-Elkies-periodic, thm:periodic-packing-optimal"}
 
-The result follows immediately from [periodic-packing-optimal](#thm:periodic-packing-optimal) and [Cohn--Elkies {[ElkiesCohn]}](#thm:Cohn-Elkies-periodic).
+The result follows immediately from [periodic-packing-optimal](#thm:periodic-packing-optimal) and [Cohn--Elkies {[@ElkiesCohn]}](#thm:Cohn-Elkies-periodic).
 
 The main step in our proof of [MainTheorem](#MainTheorem) is the explicit construction of an optimal function. It will be convenient for us to scale this function by $\sqrt{2}$.
 
@@ -101,7 +101,7 @@ g(0)&=\widehat{g}(0)=1.
 \end{align*}
 $$
 
-Theorem [Cohn--Elkies {[ElkiesCohn]}](#thm:Cohn-Elkies-general) applied to the optimal function $f(x)=g(x/\sqrt{2})$ immediately implies [MainTheorem](#MainTheorem).
+Theorem [Cohn--Elkies {[@ElkiesCohn]}](#thm:Cohn-Elkies-general) applied to the optimal function $f(x)=g(x/\sqrt{2})$ immediately implies [MainTheorem](#MainTheorem).
 
 \pagebreak
 

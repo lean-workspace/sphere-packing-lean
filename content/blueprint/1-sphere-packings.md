@@ -7,7 +7,7 @@ tags:
 
 The Sphere Packing problem is a classic optimisation problem with widespread applications that go well beyond mathematics. The task is to determine the ``densest" possible arrangement of spheres in a given space. It remains unsolved in all but finitely many dimensions.
 
-It was famously determined, in [Via2017], that the optimal arrangement in $\mathbb{R}^8$ is given by the $E_8$ lattice. The result is strongly dependent on the Cohn-Elkies linear programming bound (Theorem 3.1 in [ElkiesCohn]), which, if a $\mathbb{R}^d \to \mathbb{R}$ function satisfying certain conditions exists, bounds the optimal density of sphere packings in $\mathbb{R}^d$ in terms of it. The proof in [Via2017] uses the theory of modular forms to construct a function that can be used to bound the density of all sphere packings in $\mathbb{R}^8$ above by the density of the $E_8$ lattice packing. This then allows us to conclude that no packing in $\mathbb{R}^8$ can be denser than the $E_8$ lattice packing.
+It was famously determined, in [@Via2017], that the optimal arrangement in $\mathbb{R}^8$ is given by the $E_8$ lattice. The result is strongly dependent on the Cohn-Elkies linear programming bound (Theorem 3.1 in [@ElkiesCohn]), which, if a $\mathbb{R}^d \to \mathbb{R}$ function satisfying certain conditions exists, bounds the optimal density of sphere packings in $\mathbb{R}^d$ in terms of it. The proof in [@Via2017] uses the theory of modular forms to construct a function that can be used to bound the density of all sphere packings in $\mathbb{R}^8$ above by the density of the $E_8$ lattice packing. This then allows us to conclude that no packing in $\mathbb{R}^8$ can be denser than the $E_8$ lattice packing.
 
 **The Setup**
 
@@ -164,9 +164,9 @@ For all $d$, the periodic sphere packing constant in $\mathbb{R}^d$ is equal to 
 ### Proof
 
 {\color{red}{**State this in Lean (ready).**}}
-  {\color{red}{**Fill in proof here (see [ElkiesCohn**), Appendix A]}}
+  {\color{red}{**Fill in proof here (see [@ElkiesCohn---, Appendix A]}}
 
-Thus, one can show a sphere packing to be optimal by showing its density to be equal to the _periodic_ sphere packing constant instead of the regular sphere packing constant. The determination of the periodic constant is easier than that of the general constant, as we shall see when investigating the Linear Programming bounds derived by Cohn and Elkies in [ElkiesCohn].
+Thus, one can show a sphere packing to be optimal by showing its density to be equal to the _periodic_ sphere packing constant instead of the regular sphere packing constant. The determination of the periodic constant is easier than that of the general constant, as we shall see when investigating the Linear Programming bounds derived by Cohn and Elkies in [@ElkiesCohn].
 
 **Main Result**
 
@@ -178,7 +178,7 @@ All _periodic_ packing $\mathcal{P} \subseteq \mathbb{R}^8$ has density satisfyi
 
 ### Proof
 
-Directly follows from [Cohn--Elkies {[ElkiesCohn]}](#thm:Cohn-Elkies-general) applied to the function $f(x)=g(x/\sqrt{2})$ of [g](#thm:g).
+Directly follows from [Cohn--Elkies {[@ElkiesCohn]}](#thm:Cohn-Elkies-general) applied to the function $f(x)=g(x/\sqrt{2})$ of [g](#thm:g).
 
 ## Corollary: upper-bound-E8 {#corollary:upper-bound-E8 uses="thm:periodic-packing-optimal, theorem:CE_Main"}
 

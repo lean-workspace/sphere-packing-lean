@@ -47,7 +47,7 @@ $$
 
 for all $t > 0$.
 
-Here we formalize the proof of the inequalities by Lee [Lee].
+Here we formalize the proof of the inequalities by Lee [@Lee].
 First, we can rewrite the inequality in [ineqA](#prop:ineqA) as follows.
 
 ## Definition: FG-definition {#def:FG-definition lean="F, G" uses="def:E2, def:Ek, def:H2-H3-H4"}
@@ -386,41 +386,4 @@ $$
 
 Finally, the property (eqn:g3) readily follows from [a0](#prop:a0) and [b0](#prop:b0).
 This finishes the proof of Theorems [g1](#thm:g1) and [g](#thm:g).
-
-\begin{thebibliography}{20}
-
-\bibitem{Bruinier} {\sc J. Bruinier}, _Borcherds products on O(2,l) and Chern classes of Heegner divisors_, Springer Lecture Notes in Mathematics 1780 (2002)
-
-\bibitem{ElkiesCohn}  {\sc H. Cohn, N. Elkies}, _New upper bounds on sphere packings I_, Annals of Math. 157 (2003) pp. 689--714.
-
-\bibitem{first course} {\sc F. Diamond, J. Shurman}, _A First Course in Modular Forms_, Springer New York, 2005.
-
-\bibitem{Hejhal} {\sc D. Hejhal}, {\em The Selberg trace formula for $\mathrm{PSL}(2, \mathbb{R})$},  Springer Lecture Notes in Mathematics 1001 (1983)
-
-\bibitem{Kohnen} {\sc W. Kohnen}, {\em A Very Simple Proof of the $q$-Product Expansion of the $\Delta$-Function}, The Ramanujan Journal 10 (2005): 71-73.
-
-\bibitem{Lee} {\sc S. Lee}, {\em Algebraic proof of modular form inequalities for optimal sphere packings}, arXiv preprint arXiv:2406.14659 (2024).
-
-\bibitem{Mumford} {\sc D. Mumford}, {\em Tata Lectures on Theta I}, Birkh\"auser, 1983.
-
-\bibitem{Petersson32} {\sc H. Petersson}, {\em Ueber die Entwicklungskoeffizienten der automorphen Formen}, Acta Mathematica, Bd. 58 (1932),  pp. 169--215.
-
-\bibitem{Rademacher38} {\sc H. Rademacher and H. S. Zuckerman}, {\em On the Fourier coefficients of certain modular forms of
-positive dimension}, Annals of Math. (2) 39 (1938),  pp. 433--462.
-
-\bibitem{Serre73} {\sc J. Serre}, {\em A Course in Arithmetic}, Springer New York, 1973.
-
-\bibitem{Via2017} {\sc Maryna S. Viazovska}, {\em The sphere packing problem in dimension 8	},
-Pages 991--1015 from Volume 185 (2017), Issue 3.
-
-\bibitem{1-2-3} {\sc D. Zagier}, {\em Elliptic Modular Forms and Their Applications}, In:  The 1-2-3 of Modular Forms, (K. Ranestad, ed.) Norway, Springer Universitext, 2008.
-
-\end{thebibliography}
-
-{\footnotesize
-
-Ecole Polytechnique Federale de Lausanne\\
-1015 Lausanne\\
-Switzerland\\
-{\it Email address: maryna.viazovska@epfl.ch}}
 

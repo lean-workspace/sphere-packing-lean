@@ -55,7 +55,7 @@ We have $\Gamma(1) = \langle S, T, -I \rangle$.
 
 ### Proof
 
-See [first course, Exercise 1.1.1].
+See [@first-course, Exercise 1.1.1].
 
 ## Lemma: Gamma-2-generators {#lemma:Gamma-2-generators lean="Γ2_generate" uses="def:Gamma-generators"}
 
@@ -63,7 +63,7 @@ We have $\Gamma(2) = \langle \alpha, \beta, -I \rangle$.
 
 ### Proof
 
-See [first course, Exercise 1.2.4].
+See [@first-course, Exercise 1.2.4].
 
 Let $z\in\mathfrak{H}$, $k\in\mathbb{Z}$, and $\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)\in\mathrm{SL}_2(\mathbb{Z})$. We omit many of the proofs below when they exist in Mathlib already.
 
@@ -160,7 +160,7 @@ will need is the growth of the Fourier coefficients, which is given by the follo
 
 ### Proof
 
-Note that the assumption on the polynomial growth holds when $f$ is a holomorphic modular form, where the proof can be found in [Serre73, p. 94] for the case of level 1 modular forms. This has been done in Lean 4 by David Loeffler.
+Note that the assumption on the polynomial growth holds when $f$ is a holomorphic modular form, where the proof can be found in [@Serre73, p. 94] for the case of level 1 modular forms. This has been done in Lean 4 by David Loeffler.
 
 For Eisenstein series, we can see this directly from the following:
 
@@ -222,7 +222,7 @@ $$
 
 ### Proof
 
-This is exercise 1.2.8 of [first course].
+This is exercise 1.2.8 of [@first-course].
 
 More generally, we have
 
@@ -262,7 +262,7 @@ $$
 Consider the logarithmic derivative of $\eta$, which one can easily see is equal to $\frac{\pi i}{12} E_2$.
     The result then follows from the transformation of $E_2$.
 
-    See [first course, proposition 1.2.5].
+    See [@first-course, proposition 1.2.5].
 
 ## Lemma: disc-cuspform {#lemma:disc-cuspform lean="Delta" uses="def:disc-definition, lemma:dedekind_eta_transformation"}
 
@@ -369,7 +369,7 @@ $$
 \end{align*}
 $$
 
-Another examples of modular forms we would like to consider are _theta functions_ [1-2-3, Section 3.1].
+Another examples of modular forms we would like to consider are _theta functions_ [@1-2-3, Section 3.1].
 
 ## Definition: th00-th01-th10 {#def:th00-th01-th10 lean="Θ₂, Θ₃, Θ₄"}
 
@@ -926,7 +926,7 @@ $$
     \end{align*}
 $$
 
-We also have the following useful theorem for proving positivity of quasimodular forms on the imaginary axis, which is [Lee, Proposition 3.5, Corollary 3.6].
+We also have the following useful theorem for proving positivity of quasimodular forms on the imaginary axis, which is [@Lee, Proposition 3.5, Corollary 3.6].
 
 ## Theorem: anti-serre-der-pos {#thm:anti-serre-der-pos uses="def:serre-der, cor:logder-disc-E2"}
 
