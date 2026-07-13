@@ -196,5 +196,3 @@ $\Delta_8 = \Delta_{E_8}$.
 
 By definition, $\Delta_{E_8} \leq \Delta_8$, while [upper-bound-E8](#corollary:upper-bound-E8) shows $\Delta_8 = \sup_{\mathrm{packing} \, \mathcal{P}} \leq \Delta_{E_8}$, and the result follows.
 
-\pagebreak
-

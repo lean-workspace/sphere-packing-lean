@@ -125,8 +125,11 @@ plugins:
       suppressBibliography: false
       linkCitations: true
     order: 85
+  # Hover popup cards for citations (formatted bibliography entry; upgrades to
+  # a paper-note popover when a papers/<citekey> page exists) plus the styled
+  # References card at the page bottom.
   - source: ./quartz/plugins/local/literature-citations
-    enabled: false
+    enabled: true
     options:
       bibliographyFile: ./bibliography.bib
       papersRoot: papers

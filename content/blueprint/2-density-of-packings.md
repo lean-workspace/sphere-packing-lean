@@ -115,5 +115,3 @@ $$
 \Delta_{\mathcal{P}} = \limsup_{R \to \infty} \Delta_{\mathcal{P}}(R) = \lim_{R \to \infty} \Delta_{\mathcal{P}}(R) = |X / \Lambda| \cdot \frac{\operatorname{Vol}\!\left(\mathcal{B}_d(r / 2)\right)}{\operatorname{Vol}\!\left(\mathbb{R}^d / \Lambda\right)}
 $$
 
-\pagebreak
-

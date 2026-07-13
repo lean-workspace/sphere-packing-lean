@@ -121,5 +121,3 @@ $$
 
     is a Schwartz function.
 
-\pagebreak
-

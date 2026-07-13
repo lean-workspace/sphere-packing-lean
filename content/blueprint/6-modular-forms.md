@@ -961,5 +961,3 @@ $$
 
 and $\lim_{t \to \infty} e^{2 \pi n_{0}t} F(it) = a_{n_0} > 0$, hence the result follows.
 
-\pagebreak
-

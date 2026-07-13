@@ -103,5 +103,3 @@ $$
 
 Theorem [Cohn--Elkies {[@ElkiesCohn]}](#thm:Cohn-Elkies-general) applied to the optimal function $f(x)=g(x/\sqrt{2})$ immediately implies [MainTheorem](#MainTheorem).
 
-\pagebreak
-
