@@ -1,11 +1,10 @@
 ---
-title: 'Proof of Theorem \ref{thm:g'
+title: 'Proof of Theorem g'
 type: "blueprint-chapter"
 tags:
   - "blueprint"
 ---
 
-}
 Our proof of the [g](#thm:g) relies on the following two inequalities for modular objects.
 
 ## Proposition: ineqA {#prop:ineqA uses="lemma:ineqABnew-equiv, lemma:F-G-phi-psi-identities, lemma:F-G-pos, cor:ineqAnew"}

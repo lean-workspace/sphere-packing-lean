@@ -1862,7 +1862,7 @@
     {
       "id": "prop-ineqa",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#propineqa",
       "x": 3399,
       "y": 1079,
@@ -1876,7 +1876,7 @@
     {
       "id": "prop-ineqb",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#propineqb",
       "x": 3275,
       "y": 1329,
@@ -1890,7 +1890,7 @@
     {
       "id": "def-fg-definition",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#deffg-definition",
       "x": 2263,
       "y": 749,
@@ -1905,7 +1905,7 @@
     {
       "id": "lemma-f-g-phi-psi-identities",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#lemmaf-g-phi-psi-identities",
       "x": 2989,
       "y": 856,
@@ -1919,7 +1919,7 @@
     {
       "id": "lemma-ineqabnew-equiv",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#lemmaineqabnew-equiv",
       "x": 3275,
       "y": 963,
@@ -1933,7 +1933,7 @@
     {
       "id": "lemma-f-g-pos",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#lemmaf-g-pos",
       "x": 3411,
       "y": 856,
@@ -1948,7 +1948,7 @@
     {
       "id": "cor-ineqanew",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#corineqanew",
       "x": 3523,
       "y": 963,
@@ -1963,7 +1963,7 @@
     {
       "id": "lemma-fg-de",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#lemmafg-de",
       "x": 3659,
       "y": 856,
@@ -1978,7 +1978,7 @@
     {
       "id": "cor-mlde-pos",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#cormlde-pos",
       "x": 3837,
       "y": 963,
@@ -1993,7 +1993,7 @@
     {
       "id": "lemma-qlim",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#lemmaqlim",
       "x": 4151,
       "y": 856,
@@ -2008,7 +2008,7 @@
     {
       "id": "lemma-log-der-inf",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#lemmalog-der-inf",
       "x": 4165,
       "y": 535,
@@ -2023,7 +2023,7 @@
     {
       "id": "prop-qdec",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#propqdec",
       "x": 3993,
       "y": 1079,
@@ -2038,7 +2038,7 @@
     {
       "id": "cor-ineqbnew",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#corineqbnew",
       "x": 3854,
       "y": 1204,
@@ -2053,7 +2053,7 @@
     {
       "id": "thm-g1",
       "type": "file",
-      "file": "blueprint/8-proof-of-theorem-ref-thm-g.md",
+      "file": "blueprint/8-proof-of-theorem-g.md",
       "subpath": "#thmg1",
       "x": 3275,
       "y": 1454,
