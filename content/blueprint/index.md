@@ -24,5 +24,6 @@ npm run blueprint:sync    # extract kernel truth + regenerate the canvas
 
 The original leanblueprint site remains at
 [thefundamentaltheor3m.github.io/Sphere-Packing-Lean/blueprint](https://thefundamentaltheor3m.github.io/Sphere-Packing-Lean/blueprint/).
-This workspace starts with a scaffold chapter on sphere packings and their
-density; the remaining chapters are being migrated.
+All 8 chapters are migrated as native chapters (141 items), from sphere
+packings and the $E_8$ lattice through the modular-form construction of the
+magic function.

@@ -1,7 +1,18 @@
 {
   "label": "Sphere Packing blueprint",
   "pages": [
-    { "page": "dep-graph", "type": "canvas", "title": "Dependency canvas" },
-    "01-sphere-packings"
+    {
+      "page": "dep-graph",
+      "type": "canvas",
+      "title": "Dependency canvas"
+    },
+    "1-sphere-packings",
+    "2-density-of-packings",
+    "3-the-lattice",
+    "4-facts-from-fourier-analysis",
+    "5-cohn-elkies-linear-programming-bounds",
+    "6-modular-forms",
+    "7-fourier-eigenfunctions-with-double-zeroes-at-lattice-points",
+    "8-proof-of-theorem-ref-thm-g"
   ]
 }
