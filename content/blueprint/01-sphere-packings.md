@@ -40,7 +40,7 @@ The *density* of a packing $\mathcal{P}$ is the limit superior
 
 $$\Delta_{\mathcal{P}} := \limsup_{R \to \infty} \Delta_{\mathcal{P}}(R).$$
 
-## Definition: Sphere packing constant {#SpherePackingConstant lean="SpherePackingConstant" uses="SpherePacking.balls, SpherePacking.density"}
+## Definition: Sphere packing constant {#SpherePackingConstant lean="SpherePackingConstant" uses="SpherePacking.density"}
 
 The *sphere packing constant* is the supremum of packing densities over all
 possible packings:

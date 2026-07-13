@@ -1,4 +1,7 @@
 {
   "label": "Sphere Packing blueprint",
-  "pages": ["01-sphere-packings"]
+  "pages": [
+    { "page": "dep-graph", "type": "canvas", "title": "Dependency canvas" },
+    "01-sphere-packings"
+  ]
 }

@@ -1,0 +1,174 @@
+{
+  "nodes": [
+    {
+      "id": "spherepacking",
+      "type": "file",
+      "file": "blueprint/01-sphere-packings.md",
+      "subpath": "#spherepacking",
+      "x": 74,
+      "y": 0,
+      "width": 250,
+      "height": 64,
+      "color": "#B0ECA3",
+      "bpTitle": "Definition 1.1 · The SpherePacking structure",
+      "bpKind": "Definition 1.1",
+      "bpName": "The SpherePacking structure",
+      "bpStatus": "statement ✓"
+    },
+    {
+      "id": "spherepacking-balls",
+      "type": "file",
+      "file": "blueprint/01-sphere-packings.md",
+      "subpath": "#spherepackingballs",
+      "x": 0,
+      "y": 107,
+      "width": 150,
+      "height": 64,
+      "color": "#B0ECA3",
+      "bpTitle": "Definition 1.2 · Sphere packing",
+      "bpKind": "Definition 1.2",
+      "bpName": "Sphere packing",
+      "bpStatus": "statement ✓"
+    },
+    {
+      "id": "spherepacking-finitedensity",
+      "type": "file",
+      "file": "blueprint/01-sphere-packings.md",
+      "subpath": "#spherepackingfinitedensity",
+      "x": 66,
+      "y": 214,
+      "width": 150,
+      "height": 64,
+      "color": "#B0ECA3",
+      "bpTitle": "Definition 1.3 · Finite density",
+      "bpKind": "Definition 1.3",
+      "bpName": "Finite density",
+      "bpStatus": "statement ✓"
+    },
+    {
+      "id": "spherepacking-density",
+      "type": "file",
+      "file": "blueprint/01-sphere-packings.md",
+      "subpath": "#spherepackingdensity",
+      "x": 128,
+      "y": 321,
+      "width": 150,
+      "height": 64,
+      "color": "#B0ECA3",
+      "bpTitle": "Definition 1.4 · Density",
+      "bpKind": "Definition 1.4",
+      "bpName": "Density",
+      "bpStatus": "statement ✓"
+    },
+    {
+      "id": "spherepackingconstant",
+      "type": "file",
+      "file": "blueprint/01-sphere-packings.md",
+      "subpath": "#spherepackingconstant",
+      "x": 94,
+      "y": 428,
+      "width": 217,
+      "height": 64,
+      "color": "#B0ECA3",
+      "bpTitle": "Definition 1.5 · Sphere packing constant",
+      "bpKind": "Definition 1.5",
+      "bpName": "Sphere packing constant",
+      "bpStatus": "statement ✓"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "spherepacking",
+      "fromSide": "bottom",
+      "toNode": "spherepacking-balls",
+      "toSide": "top",
+      "dashed": true
+    },
+    {
+      "id": "e1",
+      "fromNode": "spherepacking",
+      "fromSide": "bottom",
+      "toNode": "spherepacking-finitedensity",
+      "toSide": "top",
+      "dashed": true
+    },
+    {
+      "id": "e2",
+      "fromNode": "spherepacking-balls",
+      "fromSide": "bottom",
+      "toNode": "spherepacking-finitedensity",
+      "toSide": "top",
+      "dashed": true
+    },
+    {
+      "id": "e3",
+      "fromNode": "spherepacking",
+      "fromSide": "bottom",
+      "toNode": "spherepacking-density",
+      "toSide": "top",
+      "dashed": true
+    },
+    {
+      "id": "e4",
+      "fromNode": "spherepacking-finitedensity",
+      "fromSide": "bottom",
+      "toNode": "spherepacking-density",
+      "toSide": "top",
+      "dashed": true
+    },
+    {
+      "id": "e5",
+      "fromNode": "spherepacking-density",
+      "fromSide": "bottom",
+      "toNode": "spherepackingconstant",
+      "toSide": "top",
+      "dashed": true
+    }
+  ],
+  "legend": {
+    "title": "Formalization status (kernel-computed)",
+    "nodes": [
+      {
+        "color": "#1CAC78",
+        "label": "fully formalized (proof + all ancestors)"
+      },
+      {
+        "color": "#9CEC8B",
+        "label": "proof formalized"
+      },
+      {
+        "color": "#FCD34D",
+        "label": "in progress (proof contains sorry)"
+      },
+      {
+        "color": "#B0ECA3",
+        "label": "statement formalized"
+      },
+      {
+        "color": "#A3D6FF",
+        "label": "ready to formalize (proof)"
+      },
+      {
+        "color": "#3b82f6",
+        "label": "ready to formalize (statement)"
+      },
+      {
+        "color": null,
+        "label": "not ready"
+      }
+    ],
+    "edges": [
+      {
+        "dashed": true,
+        "label": "uses (statement)"
+      },
+      {
+        "dashed": false,
+        "color": "6",
+        "label": "uses (proof)"
+      }
+    ],
+    "note": "Statuses are computed from the Lean kernel (lake exe blueprint-data). Hover a card to highlight its direct dependencies; click a title to open it in its chapter."
+  }
+}
