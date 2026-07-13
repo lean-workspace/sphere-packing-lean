@@ -1,20 +1,33 @@
-<p align="center">
-  <img src=".github/assets/lean-workspace-teaser.png" alt="Lean Workspace — interactive blueprint viewer with in-repo AI-agent collaboration" width="820" />
-</p>
+# Sphere Packing in Lean — Lean Workspace
 
-<p align="center">
-  <a href="https://lean-workspace.sepo.site/tutorial/quick-start">See it in practice</a> &nbsp;|&nbsp;
-  <a href="https://lean-workspace.sepo.site/">Documentation</a> &nbsp;|&nbsp;
-  <a href="https://github.com/new/import">Gallery</a> &nbsp;|&nbsp;
-  <a href="https://github.com/new/import">Start your own</a>
-</p>
+Interactive blueprint companion for
+[Sphere-Packing-Lean](https://github.com/thefundamentaltheor3m/Sphere-Packing-Lean),
+the Lean 4 formalization of Viazovska's solution to the sphere packing
+problem in dimension 8. All 8 chapters of the upstream blueprint render here
+as native chapters whose statuses, dependency edges, and source snippets are
+recomputed from the compiled library — nothing is hand-maintained.
 
----
+```bash
+lake exe cache get             # prebuilt mathlib
+lake build +SpherePacking      # compile the pinned upstream library
+npm install && npm run dev     # site at http://localhost:8080
+npm run blueprint:sync         # refresh kernel statuses after Lean changes
+```
 
-**Lean Workspace** is a template for formalizing theorems in Lean where human teams and AI agents work side by side — plan a proof as a blueprint, formalize it in Lean, and collaborate right in the repository.
+## Attribution
 
-- **In-situ agent support** — Invoke AI agents right in your repo's issues and PRs — to scaffold blueprints, discuss / write proofs, and refine them.
-- **Interactive blueprint viewer** — It enables selectively focusing on a part of the blueprint & displaying the proof details directly on the sidebar.
-- **Just-in-time collaboration** — It creates live previews for each branch. With the onsite chat drawer, you can comment and coordinate with team.
+The mathematics here is the work of the
+[Sphere Packing in Lean](https://github.com/thefundamentaltheor3m/Sphere-Packing-Lean)
+project by Christopher Birkbeck, Sidharth Hariharan, Seewoo Lee, Gareth Ma,
+Bhavik Mehta, and Maryna Viazovska — kickstarted at EPFL by Maryna Viazovska
+and Sidharth Hariharan in March 2024, and maintained by Christopher Birkbeck,
+Sidharth Hariharan, Bhavik Mehta, and Seewoo Lee.
 
-**Get started →** [quick start](https://lean-workspace.sepo.site/tutorial/quick-start), with [Sepo](https://app.sepo.sh/new?path=template&template=lean-workspace) or locally.
+- **Original blueprint site** —
+  [thefundamentaltheor3m.github.io/Sphere-Packing-Lean/blueprint](https://thefundamentaltheor3m.github.io/Sphere-Packing-Lean/blueprint/)
+
+The blueprint prose is converted from the upstream LaTeX sources, licensed
+[Apache-2.0](UPSTREAM-LICENSE.txt); the Lean library itself is consumed as a
+pinned Lake dependency, not copied. The workspace machinery comes from the
+Lean Workspace template ([PolyForm Shield](LICENSE.txt), third-party notices
+in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).

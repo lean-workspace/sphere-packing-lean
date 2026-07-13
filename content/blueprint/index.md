@@ -11,6 +11,12 @@ Companion blueprint for
 the Lean 4 formalization of Viazovska's solution to the sphere packing
 problem in dimension 8.
 
+The mathematics is the work of the upstream project by Christopher Birkbeck,
+Sidharth Hariharan, Seewoo Lee, Gareth Ma, Bhavik Mehta, and Maryna
+Viazovska — kickstarted at EPFL by Maryna Viazovska and Sidharth Hariharan
+in March 2024. The prose here is converted from the upstream LaTeX sources
+(Apache-2.0).
+
 The Lean code lives upstream and is pinned as a Lake dependency; chapters here
 are reference chapters whose items point at upstream declarations with
 `lean="..."`. Statuses, dependency edges, and source snippets are recomputed
