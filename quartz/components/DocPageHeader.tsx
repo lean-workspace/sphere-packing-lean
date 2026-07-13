@@ -58,6 +58,25 @@ const doiHref = (doi: string) => {
   return `https://doi.org/${normalized}`
 }
 
+// The repository THIS workspace is hosted in — where chapter sources actually
+// live. blueprintCfg.repo is the project repository for discussion links and,
+// in companion mode, a different upstream repository entirely.
+let cachedWorkspaceRepo: string | null | undefined
+function workspaceRepo(repoRoot: string): string | null {
+  if (cachedWorkspaceRepo !== undefined) return cachedWorkspaceRepo
+  cachedWorkspaceRepo = null
+  try {
+    const url = execFileSync("git", ["remote", "get-url", "origin"], {
+      cwd: repoRoot,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim()
+    const m = url.match(/github\.com[:/]+([^/\s]+\/[^/\s]+?)(?:\.git)?$/)
+    if (m) cachedWorkspaceRepo = m[1]
+  } catch {}
+  return cachedWorkspaceRepo
+}
+
 let cachedSourceRef: string | undefined
 function sourceRef(fallback = "main") {
   if (cachedSourceRef) return cachedSourceRef
@@ -192,10 +211,14 @@ const DocPageHeader: QuartzComponent = ({
   const isBlueprintPage = slug === blueprintCfg.root || slug.startsWith(`${blueprintCfg.root}/`)
   const pageSourceHref =
     isBlueprintPage && relativePath
-      ? githubSourceUrl(blueprintCfg.repo, path.posix.join("content", relativePath), {
-          ref: sourceRef(),
-          startLine: 1,
-        })
+      ? githubSourceUrl(
+          workspaceRepo(repoRoot) ?? blueprintCfg.repo,
+          path.posix.join("content", relativePath),
+          {
+            ref: sourceRef(),
+            startLine: 1,
+          },
+        )
       : null
   const pageSourceLabel = relativePath?.endsWith(".lean")
     ? "View Lean chapter source"

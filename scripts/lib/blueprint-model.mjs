@@ -92,6 +92,63 @@ export function repoRelativePath(repoRoot, absPath) {
   return rel.split(path.sep).join("/")
 }
 
+// The repository THIS workspace is hosted in (for links to files that live
+// here, e.g. chapter sources) — distinct from cfg.repo, which is the project
+// repository that receives discussion links and, in companion mode, is a
+// different upstream repository entirely.
+let cachedWorkspaceRepo
+export function workspaceRepo(repoRoot) {
+  if (cachedWorkspaceRepo !== undefined) return cachedWorkspaceRepo
+  cachedWorkspaceRepo = null
+  try {
+    const url = execFileSync("git", ["remote", "get-url", "origin"], {
+      cwd: repoRoot,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    }).trim()
+    const m = url.match(/github\.com[:/]+([^/\s]+\/[^/\s]+?)(?:\.git)?$/)
+    if (m) cachedWorkspaceRepo = m[1]
+  } catch {}
+  return cachedWorkspaceRepo
+}
+
+let cachedManifest = null
+function manifestPackages(repoRoot) {
+  if (cachedManifest && cachedManifest.root === repoRoot) return cachedManifest.pkgs
+  let pkgs = []
+  try {
+    const m = JSON.parse(fs.readFileSync(path.join(repoRoot, "lake-manifest.json"), "utf8"))
+    pkgs = (m.packages ?? []).filter((p) => p.name && p.url && p.rev)
+  } catch {}
+  cachedManifest = { root: repoRoot, pkgs }
+  return pkgs
+}
+
+// True source of a snippet: when it resolves inside a Lake package checkout
+// (.lake/packages/<name>) or a vendored copy of one (decl file paths start
+// with the package's module root, which for adopted-project layouts equals
+// the package name), the honest link target is the upstream repository at the
+// manifest's pinned revision — not this repository's copy at its own HEAD.
+export function packageSourceRef(repoRoot, snippet) {
+  if (!repoRoot || !snippet?.file) return null
+  const pkgs = manifestPackages(repoRoot)
+  if (!pkgs.length) return null
+  const file = String(snippet.file).replace(/\\/g, "/")
+  const baseName = snippet.baseDir ? path.basename(snippet.baseDir) : null
+  const inLake = snippet.baseDir
+    ? String(snippet.baseDir).includes(`.lake${path.sep}packages`)
+    : false
+  const pkg =
+    (inLake && pkgs.find((p) => p.name === baseName)) || pkgs.find((p) => p.name === file.split("/")[0])
+  if (!pkg) return null
+  const repo = String(pkg.url)
+    .trim()
+    .replace(/\.git$/, "")
+    .replace(/^https:\/\/github\.com\//, "")
+  if (!/^[^/\s]+\/[^/\s]+$/.test(repo)) return null
+  return { repo, ref: pkg.rev, path: file }
+}
+
 export function githubSourceUrl(repo, repoPath, { ref = sourceRef(), startLine, endLine } = {}) {
   if (!repo || !repoPath) return null
   const normalizedRepo = String(repo)
@@ -729,9 +786,14 @@ export function buildSourceModel({ blueprintDir, dataPath, leanSrcDirs }) {
   const uniqueSlug = makeUniqueSlugger()
 
   let chNum = 0
-  for (const seg of meta.pages) {
-    const mdCandidate = path.join(blueprintDir, seg + ".md")
-    const leanCandidate = path.join(blueprintDir, seg + ".lean")
+  // A pages entry is normally a chapter file; it may instead be a part folder
+  // with its own _meta.json (label + ordered chapter pages) — one level deep.
+  // Foldered chapters join the global numbering, with folder-qualified slugs
+  // matching Quartz page slugs (content/blueprint/<folder>/<file>).
+  const chapterEntries = []
+  const resolveChapterEntry = (dirAbs, slugPrefix, seg) => {
+    const mdCandidate = path.join(dirAbs, seg + ".md")
+    const leanCandidate = path.join(dirAbs, seg + ".lean")
     const hasMd = fs.existsSync(mdCandidate)
     const hasLean = fs.existsSync(leanCandidate)
     // a chapter lives in exactly one format at a time; preferring one silently
@@ -744,9 +806,24 @@ export function buildSourceModel({ blueprintDir, dataPath, leanSrcDirs }) {
       )
     }
     const file = hasLean ? leanCandidate : hasMd ? mdCandidate : null
-    const format = hasLean ? "lean" : "md"
-    if (!file) continue // folders / non-chapter entries are not ours to validate
-
+    if (!file) return false
+    chapterEntries.push({ file, format: hasLean ? "lean" : "md", slugPrefix, seg })
+    return true
+  }
+  for (const seg of meta.pages) {
+    if (typeof seg !== "string") continue // generated entries ({page,type}) are not ours
+    if (resolveChapterEntry(blueprintDir, "", seg)) continue
+    // part folder: recurse one level via its _meta.json; other non-chapter
+    // entries are not ours to validate
+    const subMetaPath = path.join(blueprintDir, seg, "_meta.json")
+    if (!fs.existsSync(subMetaPath)) continue
+    const subMeta = JSON.parse(fs.readFileSync(subMetaPath, "utf8"))
+    for (const sub of subMeta.pages ?? []) {
+      if (typeof sub !== "string") continue
+      resolveChapterEntry(path.join(blueprintDir, seg), `${seg}/`, sub)
+    }
+  }
+  for (const { file, format, slugPrefix, seg } of chapterEntries) {
     const src = fs.readFileSync(file, "utf8")
     let md
     if (format === "lean") {
@@ -764,7 +841,7 @@ export function buildSourceModel({ blueprintDir, dataPath, leanSrcDirs }) {
     const parsed = parsePlanMdSources([{ name: seg, src: md }])
     chNum++
     const fileName = path.basename(file)
-    const chapterSlug = chapterSlugFor(fileName)
+    const chapterSlug = slugPrefix + chapterSlugFor(fileName)
     for (const pc of parsed) {
       const chapter = {
         num: chNum,

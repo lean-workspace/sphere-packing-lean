@@ -1233,7 +1233,9 @@ pre {
 
 .bp-code-header {
   display: flex;
-  align-items: center;
+  // baseline, not center: the source side nests an anchor inside an
+  // ellipsized span, and center alignment lets the two texts drift vertically
+  align-items: baseline;
   justify-content: space-between;
   gap: 0.75rem;
   margin: 1rem 0 0;
@@ -1287,6 +1289,12 @@ pre {
   text-align: right;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  // inline (not inline-flex): keeps the link on the shared text baseline and
+  // lets the span's ellipsis apply to the link text
+  a {
+    display: inline;
+  }
 }
 
 .bp-code-header + figure[data-rehype-pretty-code-figure] > pre {

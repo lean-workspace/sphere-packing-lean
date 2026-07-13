@@ -23,6 +23,7 @@ import {
   anchorOf,
   loadBlueprintConfig,
   githubSourceUrl,
+  packageSourceRef,
   repoRelativePath,
   sourceRef,
 } from "../../../../scripts/lib/blueprint-model.mjs"
@@ -56,8 +57,14 @@ function* leanFilesUnder(dir) {
 
 function modelCacheKey(cfg) {
   const parts = []
-  for (const f of fs.readdirSync(cfg.blueprintDir)) {
-    parts.push(statSig(path.join(cfg.blueprintDir, f)))
+  for (const f of fs.readdirSync(cfg.blueprintDir, { withFileTypes: true })) {
+    const p = path.join(cfg.blueprintDir, f.name)
+    parts.push(statSig(p))
+    // per-part chapter subfolders: folder mtime does not change on inner
+    // content edits, so stat the entries too (one level, matching the model)
+    if (f.isDirectory() && !f.name.startsWith(".")) {
+      for (const g of fs.readdirSync(p)) parts.push(statSig(path.join(p, g)))
+    }
   }
   parts.push(statSig(cfg.dataPath))
   for (const dir of cfg.leanSrcDirs) {
@@ -122,12 +129,23 @@ export function itemHeadingTitle(item) {
 }
 
 function chapterHref(fromSlug, toItem, root) {
-  // both chapter pages live in the same folder; same-page refs use the bare anchor.
-  // anchors are github-slugged so they survive crawl-links/rehype-slug untouched.
+  // same-page refs use the bare anchor; cross-chapter refs use a relative path
+  // (chapters may sit in per-part subfolders, so sibling-name links are not
+  // enough). anchors are github-slugged so they survive crawl-links/rehype-slug.
   const anchor = anchorOf(toItem.label)
   const target = `${root}/${toItem.chapter.slug}`
   if (fromSlug === target) return `#${anchor}`
-  return `${toItem.chapter.slug}.md#${anchor}`
+  const fromParts = fromSlug.split("/").slice(0, -1)
+  const targetParts = target.split("/")
+  let common = 0
+  while (
+    common < fromParts.length &&
+    common < targetParts.length - 1 &&
+    fromParts[common] === targetParts[common]
+  )
+    common++
+  const up = "../".repeat(fromParts.length - common)
+  return `${up}${targetParts.slice(common).join("/")}.md#${anchor}`
 }
 
 const escapeHtml = (s) =>
@@ -146,13 +164,22 @@ function snippetRepoPath(cfg, snippet) {
 }
 
 function sourceLocHtml(cfg, snippet) {
-  const repoPath = snippetRepoPath(cfg, snippet)
+  // prefer the true upstream source (Lake package at its pinned revision)
+  // over this repository's checkout/vendored copy
+  const pkgRef = packageSourceRef(cfg.repoRoot, snippet)
+  const repoPath = pkgRef ? pkgRef.path : snippetRepoPath(cfg, snippet)
   const loc = `${repoPath}:${snippet.startLine}–${snippet.endLine}`
-  const href = githubSourceUrl(cfg.repo, repoPath, {
-    ref: sourceRef(),
-    startLine: snippet.startLine,
-    endLine: snippet.endLine,
-  })
+  const href = pkgRef
+    ? githubSourceUrl(pkgRef.repo, pkgRef.path, {
+        ref: pkgRef.ref,
+        startLine: snippet.startLine,
+        endLine: snippet.endLine,
+      })
+    : githubSourceUrl(cfg.repo, repoPath, {
+        ref: sourceRef(),
+        startLine: snippet.startLine,
+        endLine: snippet.endLine,
+      })
   const locHtml = `<code>${escapeHtml(loc)}</code>`
   return href
     ? `<a class="bp-src-link" href="${href}" target="_blank" rel="noopener noreferrer">${locHtml}</a>`
