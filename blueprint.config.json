@@ -7,13 +7,8 @@
         "type": "dir"
       },
       "pageMode": "chapter",
-      "lakeRoots": [
-        "SpherePacking"
-      ],
-      "leanSrcDirs": [
-        ".lake/packages/SpherePacking",
-        "vendor/upstream"
-      ],
+      "lakeRoots": ["SpherePacking"],
+      "leanSrcDirs": [".lake/packages/SpherePacking", "vendor/upstream"],
       "repo": "thefundamentaltheor3m/Sphere-Packing-Lean"
     }
   ]
