@@ -139,7 +139,8 @@ export function packageSourceRef(repoRoot, snippet) {
     ? String(snippet.baseDir).includes(`.lake${path.sep}packages`)
     : false
   const pkg =
-    (inLake && pkgs.find((p) => p.name === baseName)) || pkgs.find((p) => p.name === file.split("/")[0])
+    (inLake && pkgs.find((p) => p.name === baseName)) ||
+    pkgs.find((p) => p.name === file.split("/")[0])
   if (!pkg) return null
   const repo = String(pkg.url)
     .trim()
