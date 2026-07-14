@@ -10974,10 +10974,6 @@ var canvas_default = `.canvas-page {
   overflow: visible;
 }
 
-.canvas-edge path {
-  pointer-events: stroke;
-}
-
 .canvas-edge-label-bg {
   fill: var(--light);
   fill-opacity: 0.85;
@@ -11409,8 +11405,16 @@ body.canvas-preview-resizing {
   background: color-mix(in srgb, var(--canvas-node-color, var(--secondary)) 16%, var(--light));
   opacity: 1;
 }
-.canvas-open-sidebar svg {
-  pointer-events: none;
+.canvas-open-sidebar::before {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Cpath d='M9 4v16'/%3E%3Cpath d='m14 9 3 3-3 3'/%3E%3C/svg%3E");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
 }
 .canvas-node-file .canvas-file-label > a {
   min-width: 0;
@@ -11436,14 +11440,14 @@ body.canvas-preview-resizing {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.canvas-edges path {
+.canvas-edges path.canvas-edge {
   opacity: 0.75;
 }
 
 /* hover focus: dim everything but the hovered card, its direct parents/children,
    and the incident edges */
 .canvas-node,
-.canvas-edges path {
+.canvas-edges path.canvas-edge {
   transition: opacity 0.15s ease;
 }
 .canvas-hovering .canvas-node {
@@ -11456,10 +11460,10 @@ body.canvas-preview-resizing {
 .canvas-hovering .canvas-node.hover-focus {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
-.canvas-hovering .canvas-edges .canvas-edge path {
+.canvas-hovering .canvas-edges path.canvas-edge {
   opacity: 0.06;
 }
-.canvas-hovering .canvas-edges .canvas-edge.hover-edge path {
+.canvas-hovering .canvas-edges path.canvas-edge.hover-edge {
   opacity: 1;
   stroke-width: 2.5;
 }
@@ -11474,10 +11478,10 @@ body.canvas-preview-resizing {
   box-shadow: 0 0 0 2px var(--secondary), 0 4px 16px rgba(0, 0, 0, 0.22);
   z-index: 2;
 }
-.canvas-selecting .canvas-edges .canvas-edge path {
+.canvas-selecting .canvas-edges path.canvas-edge {
   opacity: 0.06;
 }
-.canvas-selecting .canvas-edges .canvas-edge.selection-edge path {
+.canvas-selecting .canvas-edges path.canvas-edge.selection-edge {
   opacity: 1;
   stroke-width: 2.5;
 }
@@ -11663,7 +11667,9 @@ body.canvas-preview-resizing {
 }`;
 
 // src/components/scripts/canvas.inline.ts
-var canvas_inline_default = 'function K(){let E=document.querySelectorAll(".canvas-container");if(E.length!==0)for(let t of Array.from(E)){if(t.dataset.initialized==="true")continue;t.dataset.initialized="true";let M=t.querySelector(".canvas-viewport");if(!M)continue;let j=t.dataset.enableInteraction!=="false",w=parseFloat(t.dataset.minZoom??"")||.1,H=parseFloat(t.dataset.maxZoom??"")||5,o=parseFloat(t.dataset.initialZoom??"")||1,c=0,a=0,Y=!1,D=0,O=0,v=()=>{M.style.transform=`translate(${c}px, ${a}px) scale(${o})`},q=()=>{let n=t.getBoundingClientRect(),l=parseFloat(M.style.width)||1e3,u=parseFloat(M.style.height)||1e3,r=n.width/l,d=n.height/u;o=Math.min(r,d,1)*.9,o=Math.max(w,Math.min(H,o)),c=(n.width-l*o)/2,a=(n.height-u*o)/2,v()};q();let F=o,B=c,S=a,L=t.querySelector(".canvas-reset-view"),m=()=>{if(!L)return;let n=Math.abs(o-F)>.001||Math.abs(c-B)>1||Math.abs(a-S)>1;L.style.display=n?"flex":"none"},f=[];if(j){let n=e=>{if(e.target instanceof HTMLElement&&e.target.closest(".canvas-selection-panel"))return;let s=e.target instanceof HTMLElement?e.target.closest(".canvas-node-content"):null;if(s&&s.scrollHeight>s.clientHeight){let b=s.scrollTop<=0,A=s.scrollTop+s.clientHeight>=s.scrollHeight-1,x=e.deltaY>0,J=e.deltaY<0;if(!(b&&J)&&!(A&&x))return}e.preventDefault();let i=t.getBoundingClientRect(),T=e.clientX-i.left,p=e.clientY-i.top,g=o,X=e.deltaY>0?.9:1.1;o=Math.max(w,Math.min(H,o*X)),c=T-(T-c)*(o/g),a=p-(p-a)*(o/g),v(),m()},l=e=>{if(e.button===0&&!(e.target instanceof HTMLElement&&(e.target.closest("a")||e.target.closest("button")||e.target.closest(".canvas-legend")||e.target.closest(".canvas-selection-panel")))){if(e.target instanceof HTMLElement){let s=e.target.closest(".canvas-node-content");if(s&&s.scrollHeight>s.clientHeight){let i=s.getBoundingClientRect();if(e.clientX>=i.right-16)return}}Y=!0,D=e.clientX-c,O=e.clientY-a,t.setPointerCapture(e.pointerId)}},u=e=>{Y&&(c=e.clientX-D,a=e.clientY-O,v(),m())},r=()=>{Y=!1};t.addEventListener("wheel",n,{passive:!1}),t.addEventListener("pointerdown",l),t.addEventListener("pointermove",u),t.addEventListener("pointerup",r);let d=0,h=0,I=0,z=!1,N=e=>{if(e.length<2||!e[0]||!e[1])return 0;let s=e[0].clientX-e[1].clientX,i=e[0].clientY-e[1].clientY;return Math.sqrt(s*s+i*i)},U=e=>{if(e.touches.length===2){let s=e.touches[0],i=e.touches[1];if(!s||!i)return;e.preventDefault(),z=!0,Y=!1,d=N(e.touches),h=(s.clientX+i.clientX)/2,I=(s.clientY+i.clientY)/2}},W=e=>{if(e.touches.length===2&&z){let s=e.touches[0],i=e.touches[1];if(!s||!i)return;e.preventDefault();let T=N(e.touches),p=(s.clientX+i.clientX)/2,g=(s.clientY+i.clientY)/2,X=t.getBoundingClientRect(),P=p-X.left,b=g-X.top,A=T/d,x=o;o=Math.max(w,Math.min(H,o*A)),c=P-(P-c)*(o/x),a=b-(b-a)*(o/x),c+=p-h,a+=g-I,d=T,h=p,I=g,v(),m()}},V=e=>{e.touches.length<2&&(z=!1)};t.addEventListener("touchstart",U,{passive:!1}),t.addEventListener("touchmove",W,{passive:!1}),t.addEventListener("touchend",V),f.push(()=>{t.removeEventListener("wheel",n),t.removeEventListener("pointerdown",l),t.removeEventListener("pointermove",u),t.removeEventListener("pointerup",r),t.removeEventListener("touchstart",U),t.removeEventListener("touchmove",W),t.removeEventListener("touchend",V)})}let C=t.closest(\'.page[data-frame="canvas"]\'),R=C?.querySelector(".canvas-sidebar-toggle");if(C&&R){let n=()=>{let l=t.getBoundingClientRect();C.classList.toggle("canvas-sidebar-open"),requestAnimationFrame(()=>{let r=t.getBoundingClientRect().left-l.left;c+=r,B+=r,v(),m()})};R.addEventListener("click",n),f.push(()=>{R.removeEventListener("click",n)})}let k=t.querySelector(".canvas-zoom-in"),Z=t.querySelector(".canvas-zoom-out"),$=n=>{let l=t.getBoundingClientRect(),u=l.width/2,r=l.height/2,d=o;o=Math.max(w,Math.min(H,o*n)),c=u-(u-c)*(o/d),a=r-(r-a)*(o/d),v(),m()};if(k){let n=()=>{$(1.25)};k.addEventListener("click",n),f.push(()=>k.removeEventListener("click",n))}if(Z){let n=()=>{$(.8)};Z.addEventListener("click",n),f.push(()=>Z.removeEventListener("click",n))}if(L){let n=()=>{q(),F=o,B=c,S=a,m()};L.addEventListener("click",n),f.push(()=>L.removeEventListener("click",n))}let y=t.querySelector(".canvas-fullscreen-toggle");if(y){let n=y.querySelector(".canvas-fullscreen-enter"),l=y.querySelector(".canvas-fullscreen-exit"),u=()=>{let h=document.fullscreenElement===t;n&&(n.style.display=h?"none":""),l&&(l.style.display=h?"":"none")},r=()=>{document.fullscreenElement===t?document.exitFullscreen():t.requestFullscreen()},d=()=>{u(),requestAnimationFrame(()=>{q(),F=o,B=c,S=a,m()})};y.addEventListener("click",r),document.addEventListener("fullscreenchange",d),f.push(()=>{y.removeEventListener("click",r),document.removeEventListener("fullscreenchange",d)})}let G=t.querySelectorAll(".canvas-iframe-wrapper iframe");for(let n of Array.from(G))n.addEventListener("error",()=>{let l=n.parentElement?.querySelector(".canvas-iframe-fallback");l&&(n.style.display="none",l.style.display="flex")});typeof window<"u"&&window.addCleanup&&window.addCleanup(()=>{for(let n of f)n();t.dataset.initialized="false"})}}if(typeof document<"u"){let E=()=>{K()};document.addEventListener("nav",E),document.addEventListener("render",E)}\n';
+var canvas_inline_default;
+// local patch: frame-coalesce high-frequency canvas interaction rendering
+canvas_inline_default = '"use strict";(()=>{function ae(){const y=document.querySelectorAll(".canvas-container");if(y.length!==0)for(const t of Array.from(y)){if(t.dataset.initialized==="true")continue;t.dataset.initialized="true";const H=t.querySelector(".canvas-viewport");if(!H)continue;const se=t.dataset.enableInteraction!=="false",b=parseFloat(t.dataset.minZoom??"")||.1,Y=parseFloat(t.dataset.maxZoom??"")||5;let o=parseFloat(t.dataset.initialZoom??"")||1,c=0,a=0,B=!1,j=0,G=0,J;const I=()=>{const n=`translate(${c}px, ${a}px) scale(${o})`;n!==J&&(H.style.transform=n,J=n)},Z=()=>{const n=t.getBoundingClientRect(),s=parseFloat(H.style.width)||1e3,d=parseFloat(H.style.height)||1e3,i=n.width/s,u=n.height/d;o=Math.min(i,u,1)*.9,o=Math.max(b,Math.min(Y,o)),c=(n.width-s*o)/2,a=(n.height-d*o)/2,I()};Z();let k=o,X=c,A=a;const v=t.querySelector(".canvas-reset-view");let K=v?v.style.display!=="none":!1;const z=()=>{if(!v)return;const n=Math.abs(o-k)>.001||Math.abs(c-X)>1||Math.abs(a-A)>1;n!==K&&(K=n,v.style.display=n?"flex":"none")};let T=!1,m=null,p=null;const R=new Set,le=()=>{m=null,p=null,!T&&(I(),z())},D=()=>{T||m!==null||(m=requestAnimationFrame(le))},x=()=>{m!==null&&(cancelAnimationFrame(m),m=null),p=null,!T&&(I(),z())},Q=n=>{const s=requestAnimationFrame(()=>{R.delete(s),T||n()});R.add(s)};z();const h=[()=>{T=!0,m!==null&&(cancelAnimationFrame(m),m=null);for(const n of R)cancelAnimationFrame(n);R.clear(),p=null}];if(se){const n=e=>{if(e.target instanceof HTMLElement&&e.target.closest(".canvas-selection-panel"))return;const l=e.target instanceof HTMLElement?e.target.closest(".canvas-node-content"):null;if(l&&l.scrollHeight>l.clientHeight){const q=l.scrollTop<=0,C=l.scrollTop+l.clientHeight>=l.scrollHeight-1,U=e.deltaY>0,S=e.deltaY<0;if(!(q&&S)&&!(C&&U))return}e.preventDefault(),p??=t.getBoundingClientRect();const r=e.clientX-p.left,f=e.clientY-p.top,L=o,F=e.deltaY>0?.9:1.1;o=Math.max(b,Math.min(Y,o*F)),c=r-(r-c)*(o/L),a=f-(f-a)*(o/L),D()},s=()=>{B=!1},d=e=>{if(e.button===0&&!(e.target instanceof HTMLElement&&e.target.closest("a, button, .canvas-legend, .canvas-selection-panel"))){if(e.target instanceof HTMLElement){const l=e.target.closest(".canvas-node-content");if(l&&l.scrollHeight>l.clientHeight){const r=l.getBoundingClientRect();if(e.clientX>=r.right-16)return}}B=!0,j=e.clientX-c,G=e.clientY-a,t.setPointerCapture(e.pointerId)}},i=e=>{B&&(c=e.clientX-j,a=e.clientY-G,D())};t.addEventListener("wheel",n,{passive:!1}),t.addEventListener("pointerdown",d),t.addEventListener("pointermove",i),t.addEventListener("pointerup",s),t.addEventListener("pointercancel",s),t.addEventListener("lostpointercapture",s);let u=0,g=0,V=0,W=!1,w=null;const ee=e=>{if(e.length<2||!e[0]||!e[1])return 0;const l=e[0].clientX-e[1].clientX,r=e[0].clientY-e[1].clientY;return Math.sqrt(l*l+r*r)},E=()=>{W=!1,w=null,u=0},te=e=>{if(e.touches.length!==2){E();return}const l=e.touches[0],r=e.touches[1];if(!l||!r)return;e.preventDefault();const f=ee(e.touches);if(f<=0){E();return}W=!0,B=!1,u=f,g=(l.clientX+r.clientX)/2,V=(l.clientY+r.clientY)/2,w=t.getBoundingClientRect()},ne=e=>{if(e.touches.length!==2){E();return}if(!W||!w||u<=0)return;const l=e.touches[0],r=e.touches[1];if(!l||!r)return;e.preventDefault();const f=ee(e.touches);if(f<=0)return;const L=(l.clientX+r.clientX)/2,F=(l.clientY+r.clientY)/2,q=L-w.left,C=F-w.top,U=f/u,S=o;o=Math.max(b,Math.min(Y,o*U)),c=q-(q-c)*(o/S),a=C-(C-a)*(o/S),c+=L-g,a+=F-V,u=f,g=L,V=F,D()},oe=e=>{e.touches.length!==2&&E()};t.addEventListener("touchstart",te,{passive:!1}),t.addEventListener("touchmove",ne,{passive:!1}),t.addEventListener("touchend",oe),t.addEventListener("touchcancel",E),h.push(()=>{t.removeEventListener("wheel",n),t.removeEventListener("pointerdown",d),t.removeEventListener("pointermove",i),t.removeEventListener("pointerup",s),t.removeEventListener("pointercancel",s),t.removeEventListener("lostpointercapture",s),t.removeEventListener("touchstart",te),t.removeEventListener("touchmove",ne),t.removeEventListener("touchend",oe),t.removeEventListener("touchcancel",E)})}const P=t.closest(\'.page[data-frame="canvas"]\'),O=P?.querySelector(".canvas-sidebar-toggle");if(P&&O){const n=()=>{const s=t.getBoundingClientRect();P.classList.toggle("canvas-sidebar-open"),p=null,Q(()=>{const i=t.getBoundingClientRect().left-s.left;c+=i,X+=i,x()})};O.addEventListener("click",n),h.push(()=>O.removeEventListener("click",n))}const $=t.querySelector(".canvas-zoom-in"),N=t.querySelector(".canvas-zoom-out"),_=n=>{const s=t.getBoundingClientRect(),d=s.width/2,i=s.height/2,u=o;o=Math.max(b,Math.min(Y,o*n)),c=d-(d-c)*(o/u),a=i-(i-a)*(o/u),x()};if($){const n=()=>_(1.25);$.addEventListener("click",n),h.push(()=>$.removeEventListener("click",n))}if(N){const n=()=>_(.8);N.addEventListener("click",n),h.push(()=>N.removeEventListener("click",n))}if(v){const n=()=>{Z(),k=o,X=c,A=a,x()};v.addEventListener("click",n),h.push(()=>v.removeEventListener("click",n))}const M=t.querySelector(".canvas-fullscreen-toggle");if(M){const n=M.querySelector(".canvas-fullscreen-enter"),s=M.querySelector(".canvas-fullscreen-exit"),d=()=>{const g=document.fullscreenElement===t;n&&(n.style.display=g?"none":""),s&&(s.style.display=g?"":"none")},i=()=>{document.fullscreenElement===t?document.exitFullscreen():t.requestFullscreen()},u=()=>{d(),p=null,Q(()=>{Z(),k=o,X=c,A=a,x()})};M.addEventListener("click",i),document.addEventListener("fullscreenchange",u),h.push(()=>{M.removeEventListener("click",i),document.removeEventListener("fullscreenchange",u)})}const ce=t.querySelectorAll(".canvas-iframe-wrapper iframe");for(const n of Array.from(ce))n.addEventListener("error",()=>{const s=n.parentElement?.querySelector(".canvas-iframe-fallback");s&&(n.style.display="none",s.style.display="flex")});typeof window<"u"&&window.addCleanup&&window.addCleanup(()=>{for(const n of h)n();t.dataset.initialized="false"})}}if(typeof document<"u"){const y=()=>ae();document.addEventListener("nav",y),document.addEventListener("render",y)}})();\n';
 // local patch: hover/click focus for direct parents/children + incident edges
 canvas_inline_default += `
 ;(() => {
@@ -11673,6 +11679,8 @@ canvas_inline_default += `
       container.dataset.hoverInit = "true"
       const parents = new Map()
       const children = new Map()
+      const neighbors = new Map()
+      const incidentEdges = new Map()
       const add = (m, k, v) => {
         if (!m.has(k)) m.set(k, new Set())
         m.get(k).add(v)
@@ -11681,6 +11689,10 @@ canvas_inline_default += `
       for (const g of edgeEls) {
         add(children, g.dataset.from, g.dataset.to)
         add(parents, g.dataset.to, g.dataset.from)
+        add(neighbors, g.dataset.from, g.dataset.to)
+        add(neighbors, g.dataset.to, g.dataset.from)
+        add(incidentEdges, g.dataset.from, g)
+        add(incidentEdges, g.dataset.to, g)
       }
       const nodeEls = new Map()
       for (const el of container.querySelectorAll(".canvas-node[data-node-id]")) {
@@ -11689,6 +11701,7 @@ canvas_inline_default += `
       const selectedIds = new Set()
       const cleanupFns = []
       let hoverId
+      let renderedHoverId
       let pointerStart
       let clickPointer
       let suppressClickUntil = 0
@@ -11794,35 +11807,59 @@ canvas_inline_default += `
         selectionPanel.hidden = !selectionPanel.hidden
         updateSelectionControl()
       }
+      const clearRenderedHover = () => {
+        if (!renderedHoverId) return
+        nodeEls.get(renderedHoverId)?.classList.remove("hover-focus")
+        for (const id of neighbors.get(renderedHoverId) ?? []) {
+          nodeEls.get(id)?.classList.remove("hover-neighbor")
+        }
+        for (const edge of incidentEdges.get(renderedHoverId) ?? []) {
+          edge.classList.remove("hover-edge")
+        }
+        renderedHoverId = undefined
+        container.classList.remove("canvas-hovering")
+      }
+      const renderHover = () => {
+        const nextId = selectedIds.size === 0 && hoverId && nodeEls.has(hoverId) ? hoverId : undefined
+        if (nextId === renderedHoverId) return
+        clearRenderedHover()
+        if (!nextId) return
+        renderedHoverId = nextId
+        container.classList.add("canvas-hovering")
+        nodeEls.get(nextId)?.classList.add("hover-focus")
+        for (const id of neighbors.get(nextId) ?? []) {
+          nodeEls.get(id)?.classList.add("hover-neighbor")
+        }
+        for (const edge of incidentEdges.get(nextId) ?? []) {
+          edge.classList.add("hover-edge")
+        }
+      }
       const clearClasses = () => {
         container.classList.remove("canvas-hovering", "canvas-selecting")
         for (const el of nodeEls.values()) {
           el.classList.remove("hover-focus", "hover-neighbor", "selection-focus", "selection-neighbor")
         }
         for (const el of edgeEls) el.classList.remove("hover-edge", "selection-edge")
+        renderedHoverId = undefined
       }
-      const applyFocus = (ids, kind) => {
-        const activeClass = kind === "selection" ? "canvas-selecting" : "canvas-hovering"
-        const focusClass = kind === "selection" ? "selection-focus" : "hover-focus"
-        const neighborClass = kind === "selection" ? "selection-neighbor" : "hover-neighbor"
-        const edgeClass = kind === "selection" ? "selection-edge" : "hover-edge"
+      const applySelectionFocus = (ids) => {
         const focusIds = new Set(ids)
-        container.classList.add(activeClass)
+        container.classList.add("canvas-selecting")
         for (const id of focusIds) {
-          nodeEls.get(id)?.classList.add(focusClass)
-          for (const p of parents.get(id) ?? []) nodeEls.get(p)?.classList.add(neighborClass)
-          for (const c of children.get(id) ?? []) nodeEls.get(c)?.classList.add(neighborClass)
+          nodeEls.get(id)?.classList.add("selection-focus")
+          for (const p of parents.get(id) ?? []) nodeEls.get(p)?.classList.add("selection-neighbor")
+          for (const c of children.get(id) ?? []) nodeEls.get(c)?.classList.add("selection-neighbor")
         }
         for (const g of edgeEls) {
-          if (focusIds.has(g.dataset.from) || focusIds.has(g.dataset.to)) g.classList.add(edgeClass)
+          if (focusIds.has(g.dataset.from) || focusIds.has(g.dataset.to)) g.classList.add("selection-edge")
         }
       }
       const renderFocus = () => {
         clearClasses()
         if (selectedIds.size > 0) {
-          applyFocus(selectedIds, "selection")
+          applySelectionFocus(selectedIds)
         } else if (hoverId && nodeEls.has(hoverId)) {
-          applyFocus([hoverId], "hover")
+          renderHover()
         }
         updateSelectionControl()
       }
@@ -11877,29 +11914,35 @@ canvas_inline_default += `
         }
         clearSelection()
       }
-      for (const [id, el] of nodeEls) {
-        if (!el.classList.contains("canvas-node-file")) continue
-        const onEnter = () => {
-          hoverId = id
-          renderFocus()
-        }
-        const onLeave = () => {
-          if (hoverId === id) hoverId = undefined
-          renderFocus()
-        }
-        el.addEventListener("mouseenter", onEnter)
-        el.addEventListener("mouseleave", onLeave)
-        cleanupFns.push(() => {
-          el.removeEventListener("mouseenter", onEnter)
-          el.removeEventListener("mouseleave", onLeave)
-        })
+      const eventFileNode = (target) => {
+        const node = target instanceof Element ? target.closest(".canvas-node-file[data-node-id]") : null
+        const id = node?.dataset.nodeId
+        return id && nodeEls.get(id) === node ? { id, node } : undefined
       }
+      const handleMouseOver = (event) => {
+        const match = eventFileNode(event.target)
+        if (!match) return
+        if (event.relatedTarget instanceof Element && match.node.contains(event.relatedTarget)) return
+        hoverId = match.id
+        renderHover()
+      }
+      const handleMouseOut = (event) => {
+        const match = eventFileNode(event.target)
+        if (!match) return
+        if (event.relatedTarget instanceof Element && match.node.contains(event.relatedTarget)) return
+        if (hoverId === match.id) hoverId = undefined
+        renderHover()
+      }
+      container.addEventListener("mouseover", handleMouseOver)
+      container.addEventListener("mouseout", handleMouseOut)
       container.addEventListener("pointerdown", rememberPointer, true)
       container.addEventListener("pointermove", trackPointer, true)
       container.addEventListener("pointerup", finishPointer, true)
       container.addEventListener("click", handleClick)
       selectionControl?.addEventListener("click", toggleSelectionPanel)
       cleanupFns.push(() => {
+        container.removeEventListener("mouseover", handleMouseOver)
+        container.removeEventListener("mouseout", handleMouseOut)
         container.removeEventListener("pointerdown", rememberPointer, true)
         container.removeEventListener("pointermove", trackPointer, true)
         container.removeEventListener("pointerup", finishPointer, true)
@@ -12320,26 +12363,7 @@ function resolveEmbeddedHtml(fileSlug, canvasSlug, allFiles, subpath, visited) {
 }
 function renderSidebarButton(href, title) {
   const label = title ? `Open ${title} in sidebar` : "Open page in sidebar";
-  return /* @__PURE__ */ u2("button", { class: "canvas-open-sidebar", type: "button", "data-href": href, "data-title": title ?? "", "aria-label": label, title: "Open in sidebar", children: /* @__PURE__ */ u2(
-    "svg",
-    {
-      xmlns: "http://www.w3.org/2000/svg",
-      width: "14",
-      height: "14",
-      viewBox: "0 0 24 24",
-      fill: "none",
-      stroke: "currentColor",
-      "stroke-width": "2",
-      "stroke-linecap": "round",
-      "stroke-linejoin": "round",
-      "aria-hidden": "true",
-      children: [
-        /* @__PURE__ */ u2("rect", { x: "3", y: "4", width: "18", height: "16", rx: "2" }),
-        /* @__PURE__ */ u2("path", { d: "M9 4v16" }),
-        /* @__PURE__ */ u2("path", { d: "m14 9 3 3-3 3" })
-      ]
-    }
-  ) });
+  return /* @__PURE__ */ u2("button", { class: "canvas-open-sidebar", type: "button", "data-href": href, "data-title": title ?? "", "aria-label": label, title: "Open in sidebar" });
 }
 function renderNode(node, renderedTexts, slug2, allFiles, visited) {
   const color = resolveColor(node.color);
@@ -12535,7 +12559,60 @@ function computeAnchorPlan(edges, nodeMap) {
   }
   return plan;
 }
-function renderEdge(edge, nodeMap, anchorPlan) {
+function markerScopeId(slug2) {
+  let hash = 2166136261;
+  for (let i = 0; i < slug2.length; i++) {
+    hash ^= slug2.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return (hash >>> 0).toString(36);
+}
+function computeMarkerPlan(edges, nodeMap, slug2) {
+  const markers = [];
+  const markerIds = {
+    start: /* @__PURE__ */ new Map(),
+    end: /* @__PURE__ */ new Map()
+  };
+  const byEdge = /* @__PURE__ */ new Map();
+  const scope = markerScopeId(slug2);
+  const markerId = (position, stroke) => {
+    const ids = markerIds[position];
+    const existing = ids.get(stroke);
+    if (existing) return existing;
+    const id = `canvas-arrow-${scope}-${position}-${ids.size}`;
+    ids.set(stroke, id);
+    markers.push({ id, position, stroke });
+    return id;
+  };
+  for (const edge of edges) {
+    if (!nodeMap.has(edge.fromNode) || !nodeMap.has(edge.toNode)) continue;
+    const stroke = resolveColor(edge.color) ?? "var(--gray)";
+    const ids = {};
+    if (edge.fromEnd === "arrow") ids.start = markerId("start", stroke);
+    if ((edge.toEnd ?? "arrow") === "arrow") ids.end = markerId("end", stroke);
+    byEdge.set(edge, ids);
+  }
+  return { markers, byEdge };
+}
+function renderEdgeMarkers(markerPlan) {
+  if (markerPlan.markers.length === 0) return null;
+  return /* @__PURE__ */ u2("defs", { children: markerPlan.markers.map(
+    ({ id, position, stroke }) => /* @__PURE__ */ u2(
+      "marker",
+      {
+        id,
+        viewBox: "0 0 10 10",
+        refX: position === "start" ? "1.5" : "8.5",
+        refY: "5",
+        markerWidth: "5",
+        markerHeight: "5",
+        orient: "auto-start-reverse",
+        children: /* @__PURE__ */ u2("path", { d: position === "start" ? "M 10 0 L 0 5 L 10 10 z" : "M 0 0 L 10 5 L 0 10 z", fill: stroke })
+      }
+    )
+  ) });
+}
+function renderEdge(edge, nodeMap, anchorPlan, markerPlan) {
   const fromNode = nodeMap.get(edge.fromNode);
   const toNode = nodeMap.get(edge.toNode);
   if (!fromNode || !toNode) return null;
@@ -12546,8 +12623,7 @@ function renderEdge(edge, nodeMap, anchorPlan) {
   const stroke = color ?? "var(--gray)";
   const hasFromArrow = edge.fromEnd === "arrow";
   const hasToArrow = (edge.toEnd ?? "arrow") === "arrow";
-  const markerId = `arrow-${edge.id}`;
-  const markerStartId = `arrow-start-${edge.id}`;
+  const markerIds = markerPlan?.byEdge.get(edge);
   const dx = to.x - from.x;
   const dy = to.y - from.y;
   const midX = from.x + dx / 2;
@@ -12571,45 +12647,21 @@ function renderEdge(edge, nodeMap, anchorPlan) {
   const [fnx, fny] = sideNormal(edge.fromSide);
   const [tnx, tny] = sideNormal(edge.toSide);
   const pathD = `M ${from.x} ${from.y} C ${from.x + fnx} ${from.y + fny}, ${to.x + tnx} ${to.y + tny}, ${to.x} ${to.y}`;
-  return /* @__PURE__ */ u2("g", { class: "canvas-edge", "data-edge-id": edge.id, "data-from": edge.fromNode, "data-to": edge.toNode, children: [
-    /* @__PURE__ */ u2("defs", { children: [
-      hasToArrow && /* @__PURE__ */ u2(
-        "marker",
-        {
-          id: markerId,
-          viewBox: "0 0 10 10",
-          refX: "8.5",
-          refY: "5",
-          markerWidth: "5",
-          markerHeight: "5",
-          orient: "auto-start-reverse",
-          children: /* @__PURE__ */ u2("path", { d: "M 0 0 L 10 5 L 0 10 z", fill: stroke })
-        }
-      ),
-      hasFromArrow && /* @__PURE__ */ u2(
-        "marker",
-        {
-          id: markerStartId,
-          viewBox: "0 0 10 10",
-          refX: "1.5",
-          refY: "5",
-          markerWidth: "5",
-          markerHeight: "5",
-          orient: "auto-start-reverse",
-          children: /* @__PURE__ */ u2("path", { d: "M 10 0 L 0 5 L 10 10 z", fill: stroke })
-        }
-      )
-    ] }),
+  return [
     /* @__PURE__ */ u2(
       "path",
       {
+        class: "canvas-edge",
+        "data-edge-id": edge.id,
+        "data-from": edge.fromNode,
+        "data-to": edge.toNode,
         d: pathD,
         fill: "none",
         stroke,
         "stroke-width": "1.75",
         "stroke-dasharray": edge.dashed ? "7 5" : void 0,
-        "marker-end": hasToArrow ? `url(#${markerId})` : void 0,
-        "marker-start": hasFromArrow ? `url(#${markerStartId})` : void 0
+        "marker-end": hasToArrow && markerIds?.end ? `url(#${markerIds.end})` : void 0,
+        "marker-start": hasFromArrow && markerIds?.start ? `url(#${markerIds.start})` : void 0
       }
     ),
     edge.label && /* @__PURE__ */ u2("g", { class: "canvas-edge-label-group", children: [
@@ -12626,7 +12678,7 @@ function renderEdge(edge, nodeMap, anchorPlan) {
       ),
       /* @__PURE__ */ u2("text", { x: midX, y: midY, class: "canvas-edge-label", "text-anchor": "middle", dy: "-8", children: edge.label })
     ] })
-  ] });
+  ];
 }
 function renderLegend(legend) {
   const swatchStyle = (color) => {
@@ -12690,6 +12742,8 @@ var CanvasBody_default = ((userOpts) => {
     const initialZoom = opts.initialZoom ?? 1;
     const minZoom = opts.minZoom ?? 0.1;
     const maxZoom = opts.maxZoom ?? 5;
+    const anchorPlan = computeAnchorPlan(edges, nodeMap);
+    const markerPlan = computeMarkerPlan(edges, nodeMap, slug2);
     return /* @__PURE__ */ u2("article", { class: "canvas-page popover-hint", children: /* @__PURE__ */ u2(
       "div",
       {
@@ -12843,10 +12897,10 @@ var CanvasBody_default = ((userOpts) => {
                 width: viewWidth,
                 height: viewHeight,
                 viewBox: `${minX - padding} ${minY - padding} ${viewWidth} ${viewHeight}`,
-                children: (() => {
-                  const anchorPlan = computeAnchorPlan(edges, nodeMap);
-                  return edges.map((edge) => renderEdge(edge, nodeMap, anchorPlan));
-                })()
+                children: [
+                  renderEdgeMarkers(markerPlan),
+                  edges.map((edge) => renderEdge(edge, nodeMap, anchorPlan, markerPlan))
+                ]
               }
             ),
             /* @__PURE__ */ u2(
