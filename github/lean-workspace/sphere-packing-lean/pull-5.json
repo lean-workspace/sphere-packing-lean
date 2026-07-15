@@ -1,0 +1,71 @@
+{
+  "author": {
+    "id": "MDQ6VXNlcjIyNTEyODI1",
+    "is_bot": false,
+    "login": "lolipopshock",
+    "name": "Shannon Shen"
+  },
+  "baseRefName": "main",
+  "body": "## Summary\n\nRepairs the pre-existing CI failures that were intentionally kept out of the canvas-performance PR.\n\n- passes `+SpherePacking` to `lean-action`, so the external dependency root is built before kernel extraction;\n- uses the same explicit root in the Mathlib-bump workflow and its generated validation notes;\n- replaces the stale `BlueprintGraph` test's dependency on removed template demo content with an isolated temporary fixture;\n- applies the existing Prettier-only changes in `blueprint.config.json` and `scripts/lib/blueprint-model.mjs`.\n\nThe workspace intentionally has no default Lake target, so plain `lake build` succeeds without producing\n`SpherePacking.olean`. Building `+SpherePacking` matches the command already documented in `lakefile.toml`.\n\n## Validation\n\nPassed with Node 22.17.0:\n\n- `npm test`;\n- `npm run check`;\n- clean content build and `QUARTZ_CONTENT_ROOT=docs npm run build`;\n- `npm run test:blueprint`;\n- agent build plus 79 workflow checks;\n- 752 agent runtime tests;\n- agent docs and shell checks;\n- `lake build +SpherePacking`;\n- `npm run blueprint:sync` (1,331 declarations, 140 nodes, 287 edges);\n- generated `blueprint-data.json` and `dep-graph.canvas` remained unchanged;\n- `git diff --check`.\n\nThis PR is independent of the canvas-performance patch in #4.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "closedAt": "2026-07-14T18:46:28Z",
+  "comments": [
+    {
+      "id": "IC_kwDOTWyAq88AAAABKGJ9Bg",
+      "author": {
+        "login": "sepo-agent-app"
+      },
+      "authorAssociation": "NONE",
+      "body": "Do you want Sepo to review this PR?\n\n<!-- sepo-agent-review-nudge -->\n\nAdd the `agent/review` label or comment `@sepo-agent /review` to launch an agent review.\nFor a preview deployment, add the `sepo-preview` label.",
+      "createdAt": "2026-07-14T18:16:30Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/lean-workspace/sphere-packing-lean/pull/5#issuecomment-4972510470",
+      "viewerDidAuthor": true
+    }
+  ],
+  "createdAt": "2026-07-14T18:13:02Z",
+  "files": [
+    {
+      "path": ".github/workflows/bump-mathlib.yml",
+      "additions": 2,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/workflows/lean.yml",
+      "additions": 1,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "blueprint.config.json",
+      "additions": 2,
+      "deletions": 7,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "quartz/components/BlueprintGraph.test.mjs",
+      "additions": 83,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "scripts/lib/blueprint-model.mjs",
+      "additions": 2,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    }
+  ],
+  "headRefName": "fix/ci-baseline",
+  "labels": [],
+  "mergedAt": "2026-07-14T18:46:28Z",
+  "number": 5,
+  "reviewDecision": "",
+  "reviews": [],
+  "state": "MERGED",
+  "title": "fix(ci): restore companion validation",
+  "updatedAt": "2026-07-14T18:46:28Z",
+  "url": "https://github.com/lean-workspace/sphere-packing-lean/pull/5"
+}

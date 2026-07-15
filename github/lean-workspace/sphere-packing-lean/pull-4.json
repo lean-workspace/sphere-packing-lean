@@ -1,0 +1,67 @@
+{
+  "author": {
+    "id": "MDQ6VXNlcjIyNTEyODI1",
+    "is_bot": false,
+    "login": "lolipopshock",
+    "name": "Shannon Shen"
+  },
+  "baseRefName": "main",
+  "body": "## Summary\n\nPorts the cumulative dependency-canvas performance work from\n[self-evolving/lean-workspace-template#19](https://github.com/self-evolving/lean-workspace-template/pull/19)\nand [#20](https://github.com/self-evolving/lean-workspace-template/pull/20) to the hosted\n140-node Sphere Packing blueprint.\n\n- shares SVG arrow markers instead of emitting one marker definition per edge;\n- removes redundant edge markup and repeated inline card-action SVGs;\n- replaces per-card hover listeners with delegated, indexed neighborhood updates;\n- keeps selection and hover focus rendering separate;\n- batches high-frequency drag, wheel, and pinch rendering to one animation frame;\n- caches interaction geometry at frame/gesture scope and hardens cancellation cleanup;\n- adds 21 canvas regressions and ensures the existing explicit CI test list includes them.\n\nThe active vendored plugin is edited directly and every change is documented in\n`PATCHES.md`.\n\n## Sphere fixture impact\n\nFor the existing 140-node / 287-edge canvas:\n\n- DOM elements: 3,087 → 1,384 (−55.2%);\n- raw generated HTML: 324,951 → 225,180 bytes (−30.7%);\n- gzip: 32,805 → 29,434 bytes (−10.3%).\n\nDeterministic interaction tests also reduce three drag writes to one, two wheel reads/writes\nto one read/write, and two pinch reads/writes to one gesture read/write.\n\nThese are static and deterministic operation measurements, not inferred frame-time claims.\nThe upstream stack still tracks the final foreground DevTools trace and visual smoke checks.\n\n## Scope\n\nExactly seven files are changed:\n\n- `package.json` (only `scripts.test`);\n- `scripts/run-tests.mjs`;\n- `quartz/plugins/local/canvas-page/PATCHES.md`;\n- `quartz/plugins/local/canvas-page/dist/index.js`;\n- `canvas-page.test.mjs`;\n- `canvas-focus.test.mjs`;\n- `canvas-interaction.test.mjs`.\n\nThe `.canvas` file was not regenerated. This PR does not change canvas data, lockfiles,\nworkflows, typings, source maps, Quartz configuration, or plugin shims.\n\n## Validation\n\nPassed with Node 22.17.0:\n\n- canvas suites: 21/21;\n- existing explicit CI Quartz invocation: 25/25 after automatic canvas-suite inclusion;\n- clean-cache `npm run build` against the 140-node fixture;\n- `git diff --check`.\n\nKnown unrelated failures remain intentionally out of scope:\n\n- bare `npm test` has one stale `BlueprintGraph.test.mjs` assertion tied to removed demo content;\n- `npm run check` reports pre-existing Prettier issues in `blueprint.config.json` and `scripts/lib/blueprint-model.mjs`;\n- the existing extraction workflow can fail because plain `lake build` has no default workspace target.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "closedAt": "2026-07-14T23:12:18Z",
+  "comments": [],
+  "createdAt": "2026-07-14T07:38:42Z",
+  "files": [
+    {
+      "path": "package.json",
+      "additions": 1,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "quartz/plugins/local/canvas-page/PATCHES.md",
+      "additions": 34,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "quartz/plugins/local/canvas-page/canvas-focus.test.mjs",
+      "additions": 498,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "quartz/plugins/local/canvas-page/canvas-interaction.test.mjs",
+      "additions": 880,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "quartz/plugins/local/canvas-page/canvas-page.test.mjs",
+      "additions": 121,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "quartz/plugins/local/canvas-page/dist/index.js",
+      "additions": 155,
+      "deletions": 101,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "scripts/run-tests.mjs",
+      "additions": 27,
+      "deletions": 0,
+      "changeType": "ADDED"
+    }
+  ],
+  "headRefName": "perf/dependency-canvas-large-graphs",
+  "labels": [],
+  "mergedAt": "2026-07-14T23:12:18Z",
+  "number": 4,
+  "reviewDecision": "",
+  "reviews": [],
+  "state": "MERGED",
+  "title": "perf(canvas): scale large dependency graphs",
+  "updatedAt": "2026-07-14T23:12:18Z",
+  "url": "https://github.com/lean-workspace/sphere-packing-lean/pull/4"
+}

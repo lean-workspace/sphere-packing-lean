@@ -1,0 +1,55 @@
+{
+  "author": {
+    "id": "MDQ6VXNlcjIyNTEyODI1",
+    "is_bot": false,
+    "login": "lolipopshock",
+    "name": "Shannon Shen"
+  },
+  "baseRefName": "main",
+  "body": "## Summary\n\nPorts the approved popover fix from\n[self-evolving/lean-workspace-template#23](https://github.com/self-evolving/lean-workspace-template/pull/23)\nat `89449ac`.\n\nThis PR is stacked on the canvas-performance PR #4 because it extends that branch's explicit\nQuartz test runner.\n\n- delays popover dismissal by 300 ms after leaving an internal link;\n- cancels pending dismissal when the popover is hovered or receives focus;\n- prevents stale timers from clearing a newly active popover;\n- removes the canvas-only `pointer-events: none` rule so canvas previews can be interacted with;\n- adds focused fake-timer coverage for dismissal, cancellation, stale-target protection, and rescheduling;\n- includes the focused suite in explicit CI test-file runs.\n\nThe delayed dismissal is implemented in the shared Quartz popover layer, so non-canvas internal-link\npopovers receive the same brief linger behavior.\n\n## Scope\n\nExactly five files differ from PR #4:\n\n- `quartz/components/scripts/popover.inline.ts`;\n- `quartz/components/scripts/popoverClearScheduler.ts`;\n- `quartz/components/scripts/popoverClearScheduler.test.mjs`;\n- `quartz/components/styles/popover.scss`;\n- `scripts/run-tests.mjs`.\n\nAll five are byte-identical to the approved template PR head.\n\n## Validation\n\nPassed with Node 22.17.0:\n\n- focused popover scheduler tests: 4/4;\n- full test discovery: 127/127;\n- explicit CI Quartz invocation: 29/29;\n- `npm run check`;\n- clean-cache `npm run build`;\n- `git diff --check`.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n",
+  "closedAt": "2026-07-14T23:12:58Z",
+  "comments": [],
+  "createdAt": "2026-07-14T23:10:21Z",
+  "files": [
+    {
+      "path": "quartz/components/scripts/popover.inline.ts",
+      "additions": 38,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "quartz/components/scripts/popoverClearScheduler.test.mjs",
+      "additions": 120,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "quartz/components/scripts/popoverClearScheduler.ts",
+      "additions": 46,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": "quartz/components/styles/popover.scss",
+      "additions": 0,
+      "deletions": 4,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": "scripts/run-tests.mjs",
+      "additions": 5,
+      "deletions": 4,
+      "changeType": "MODIFIED"
+    }
+  ],
+  "headRefName": "fix/interactive-popovers",
+  "labels": [],
+  "mergedAt": "2026-07-14T23:12:58Z",
+  "number": 6,
+  "reviewDecision": "",
+  "reviews": [],
+  "state": "MERGED",
+  "title": "fix(popover): keep canvas previews interactive",
+  "updatedAt": "2026-07-14T23:12:58Z",
+  "url": "https://github.com/lean-workspace/sphere-packing-lean/pull/6"
+}
