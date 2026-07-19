@@ -33,6 +33,3 @@ revision's `.lean` sources so deployed site builds can render declaration
 snippets without a Lake checkout — refresh it when bumping the pin. The
 mathematical references cited by the blueprint live in `bibliography.bib`
 (converted from the upstream bibliography) and render as linked citations.
-The workspace machinery comes from the Lean Workspace template
-([PolyForm Shield](LICENSE.txt), third-party notices in
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
