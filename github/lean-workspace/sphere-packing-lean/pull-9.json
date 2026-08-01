@@ -1,0 +1,365 @@
+{
+  "author": {
+    "is_bot": true,
+    "login": "app/sepo-agent-app"
+  },
+  "baseRefName": "main",
+  "body": "## Summary\n\nUpdates the installed Sepo agent infrastructure from **0.4.0** to **v0.5.0** (`5f7d2032080e9c0578d0e4cb3b98b2f695f33547`, resolved as the latest published release).\n\n- Source: `self-evolving/repo` @ `v0.5.0` / `5f7d2032080e9c0578d0e4cb3b98b2f695f33547`\n- Target branch: `main` → update branch `agent/update-agent-infra-20260801`\n- 57 files changed, scoped to `.agent/`, `.github/`, and a new root `.gitignore`\n- No files removed (obsolete-file removal was not requested)\n\nThe merge was conservative: stock-0.4.0 Sepo files were cleanly updated, new 0.5.0 files were added, and every file the target had customized was three-way merged or preserved rather than overwritten.\n\n## Changed path groups\n\n- `.agent/` runtime, docs, tooling, tests, `package.json` / `package-lock.json` / `model-defaults.json`\n- `.github/` workflows, actions, prompts\n- root `.gitignore` (created)\n\n## Audit summary\n\nEach Sepo-owned file was compared three ways (stock 0.4.0 vs. target vs. 0.5.0) to separate version changes from target customizations.\n\n**Clean updates** (target matched stock 0.4.0 → updated to 0.5.0): all `.agent/docs/*` except `supported-workflows.md`; `package.json`, `package-lock.json`, `model-defaults.json`; `acpx-adapter.ts`, `cli/extract-context.ts`, `github.ts`, `run.ts`; `acpx-adapter.test.ts`, `resolve-agent-provider.test.ts`, `envelope.test.ts`, `workflow-action-validation.test.ts`; all `tools/local-runner/*`; `.github/actions/resolve-agent-provider/resolve-provider.js`; `.github/actions/setup-agent-runtime/action.yml`; prompts `agent-answer.md`, `agent-install.md`, `agent-update.md`; workflows `agent-entrypoint.yml`, `agent-router.yml`, `agent-update.yml`.\n\n**New Sepo files added:** `.agent/README.md`; `self-improvement.ts`, `self-improvement-requester.ts`, `cli/apply-self-improvement-decision.ts`, `cli/resolve-self-improvement-requester.ts` and their tests; `scripts/test/cli-cache-keys.test.cjs`; `tools/local-runner/.gitignore`; `.github/prompts/agent-self-improvement.md`; `.github/workflows/agent-cache-seed.yml`; `.github/workflows/agent-self-improvement.yml`.\n\n**Three-way merged (target customization + 0.5.0 change, both kept):**\n- `.agent/src/triage.ts` — kept the target's `chat` → `answer` route alias (`canonicalizeExplicitRouteCommand`) **and** added Sepo's new `parseTriageMode` / `TriageMode`. One adjacent-insertion conflict was resolved by keeping both functions.\n- `.agent/src/__tests__/triage.test.ts`, `.agent/src/__tests__/extract-context-cli.test.ts` — merged cleanly.\n- `.agent/docs/usage/supported-workflows.md` — kept the target's `agent-review-nudge.yml` documentation **and** Sepo's 0.5.0 rewrite.\n\n**Preserved as-is (Sepo made no 0.5.0 change; target customization kept):** `.agent/src/discussion.ts`, `.agent/src/__tests__/discussion.test.ts`, `.agent/src/__tests__/onboarding-check-cli.test.ts`.\n\n**Preserved against a 0.5.0 change (see note below):** `.github/workflows/test-scripts.yml`.\n\n**Excluded orphan:** `.github/assets/sepo-headline.png` was **not** copied — it is referenced only by the Sepo root `README.md`, which is out of scope for this update; the target uses its own `assets/lean-workspace-teaser.png`.\n\n**Root `.gitignore`:** the target had none, so a minimal one was created with `.agent/dist/` and `.agent/node_modules/` so GitHub-hosted runner builds do not leak generated files into PRs.\n\n## Customizations preserved (target-owned, untouched)\n\nCustom runtime: `.agent/src/deployments.ts`, `literature-update.ts`, `review-nudge.ts`, and `cli/{inactivate-preview-deployments,post-review-nudge,publish-canonical-deployment,publish-literature-update,publish-preview-deployment}.ts` (+ their tests). Custom `.github`: workflows `lean.yml`, `deploy.yml`, `bump-mathlib.yml`, `agent-deploy-site-main.yml`, `agent-review-nudge.yml`, `agent-site-preview.yml`; prompts `literature-add-paper.md`, `literature-daily.md`; actions `deploy-sepo-site`, `resolve-discussion-ids`; `ISSUE_TEMPLATE/*`; `assets/lean-workspace-teaser.png`; `dependabot.yml`; `pull_request_template.md`. Root `AGENTS.md` / `CLAUDE.md` and the root `README.md` were left untouched (not requested).\n\n## ⚠️ Decision needed: `test-scripts.yml`\n\nThe target has overloaded the Sepo-owned `test-scripts.yml` with **project** CI — Quartz site validation, `npm run test:blueprint`, and the Quartz component tests. These project **unit** tests run only in this workflow on PRs (site builds are also covered by `lean.yml` / `deploy.yml`, but the blueprint model tests and Quartz component tests are not).\n\nSepo's 0.5.0 change to this file (a) restricts the `pull_request` trigger to agent-owned paths and (b) gates the job to `github.repository == 'self-evolving/repo' || vars.AGENT_TEST_SCRIPTS_ENABLED == 'true'`. Applied verbatim to this repo, that would **silently disable the target's blueprint/Quartz unit-test CI on PRs**, so `test-scripts.yml` was **preserved** rather than overwritten.\n\nConsequence: the Sepo self-test `packaged Sepo workflows have a global AGENT_ENABLED job guard` (in `envelope.test.ts`, updated to 0.5.0) asserts the pristine 0.5.0 `test-scripts.yml` shape and therefore **fails** against the preserved file. This is the single expected validation failure below.\n\nSuggested reconciliation (maintainer's call):\n1. Adopt Sepo's pristine 0.5.0 `test-scripts.yml` and move the project unit tests (`test:blueprint`, Quartz component tests) into a dedicated project-CI workflow triggered on project paths — self-test passes, coverage preserved.\n2. Keep the customized `test-scripts.yml` and accept that this Sepo self-test will keep diverging on future updates.\n\n## Validation\n\nRun in `.agent/` on this branch:\n\n- `npm ci` — OK (47 packages, new 0.5.0 Codex/ACPX deps)\n- `npm run build` (tsc) — OK; the merged `triage.ts` and all target-custom runtime compile against 0.5.0 core\n- `npm test` lanes:\n  - runtime — **780 / 780 pass**\n  - docs — **5 / 5 pass**\n  - shell — **17 / 17 pass**\n  - workflow — **90 / 91 pass**; the one failure is `packaged Sepo workflows have a global AGENT_ENABLED job guard`, caused solely by preserving the customized `test-scripts.yml` (see decision above)\n- All `.github/workflows/*.yml` parse as YAML objects\n- `git diff --check` / `git diff --cached --check` — clean; no `.agent/dist` or `.agent/node_modules` leaked into the diff\n\nNo checks were skipped.\n\n## Memory / rubrics branch status\n\n- `agent/memory` — **exists** (`e4c11da…`); not reinitialized.\n- `agent/rubrics` — **missing**; not created here.\n- `refs/agent-state/*` (scheduled-update state) — untouched.\n\n## Post-merge notes (document only)\n\n- After merge, `agent-cache-seed.yml` will run on the default branch (it triggers on `.agent/**` changes) to warm the runtime caches — expected 0.5.0 behavior.\n- `agent-self-improvement.yml` is **opt-in**: it stays disabled unless `vars.AGENT_SELF_IMPROVEMENT_ENABLED == 'true'` (and `AGENT_ENABLED != 'false'`).\n- Verify provider secrets (`OPENAI_API_KEY` / `CLAUDE_CODE_OAUTH_TOKEN` / `ANTHROPIC_API_KEY`) and the Sepo App still satisfy the updated workflows.\n- `agent/memory` exists — do not reinitialize; ongoing memory sync/scan workflows apply.\n- If rubric steering is wanted, optionally run `Agent / Rubrics / Initialization`.\n- This refresh bootstraps future dedicated-route (`agent-update.yml`) infrastructure updates.\n",
+  "closedAt": null,
+  "comments": [],
+  "createdAt": "2026-08-01T11:05:58Z",
+  "files": [
+    {
+      "path": ".agent/CHANGELOG.md",
+      "additions": 18,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/README.md",
+      "additions": 9,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/docs/architecture/overall-design.md",
+      "additions": 13,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/architecture/request-lifecycle.md",
+      "additions": 6,
+      "deletions": 4,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/customization/access-policy.md",
+      "additions": 2,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/customization/configuration-list.md",
+      "additions": 11,
+      "deletions": 7,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/index.md",
+      "additions": 5,
+      "deletions": 4,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/overview/quick-start.md",
+      "additions": 2,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/setup/self-hosted-github-action-runner.md",
+      "additions": 1,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/technical-details/key-concepts.md",
+      "additions": 1,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/technical-details/session-continuity.md",
+      "additions": 2,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/usage/agent-actions.md",
+      "additions": 4,
+      "deletions": 4,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/usage/internal-actions.md",
+      "additions": 1,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/docs/usage/supported-workflows.md",
+      "additions": 54,
+      "deletions": 8,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/model-defaults.json",
+      "additions": 2,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/package-lock.json",
+      "additions": 459,
+      "deletions": 264,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/package.json",
+      "additions": 3,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/scripts/test/cli-cache-keys.test.cjs",
+      "additions": 103,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/__tests__/acpx-adapter.test.ts",
+      "additions": 33,
+      "deletions": 27,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/__tests__/apply-self-improvement-decision-cli.test.ts",
+      "additions": 539,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/__tests__/envelope.test.ts",
+      "additions": 314,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/__tests__/extract-context-cli.test.ts",
+      "additions": 40,
+      "deletions": 5,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/__tests__/resolve-agent-provider.test.ts",
+      "additions": 15,
+      "deletions": 4,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/__tests__/self-improvement-requester.test.ts",
+      "additions": 71,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/__tests__/self-improvement.test.ts",
+      "additions": 118,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/__tests__/triage.test.ts",
+      "additions": 8,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/__tests__/workflow-action-validation.test.ts",
+      "additions": 271,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/acpx-adapter.ts",
+      "additions": 24,
+      "deletions": 35,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/cli/apply-self-improvement-decision.ts",
+      "additions": 381,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/cli/extract-context.ts",
+      "additions": 22,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/cli/resolve-self-improvement-requester.ts",
+      "additions": 49,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/github.ts",
+      "additions": 1,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/run.ts",
+      "additions": 1,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/src/self-improvement-requester.ts",
+      "additions": 68,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/self-improvement.ts",
+      "additions": 220,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/src/triage.ts",
+      "additions": 15,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/.gitignore",
+      "additions": 14,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".agent/tools/local-runner/README.md",
+      "additions": 68,
+      "deletions": 16,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/bootstrap.sh",
+      "additions": 35,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/check-requirements.sh",
+      "additions": 31,
+      "deletions": 6,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/cleanup-runner.sh",
+      "additions": 5,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/com.local-runner.cleanup.plist.template",
+      "additions": 2,
+      "deletions": 0,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/setup-runners.sh",
+      "additions": 38,
+      "deletions": 5,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/start-runners.sh",
+      "additions": 6,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".agent/tools/local-runner/stop-runners.sh",
+      "additions": 3,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/actions/resolve-agent-provider/resolve-provider.js",
+      "additions": 11,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/actions/setup-agent-runtime/action.yml",
+      "additions": 175,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/prompts/agent-answer.md",
+      "additions": 6,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/prompts/agent-install.md",
+      "additions": 2,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/prompts/agent-self-improvement.md",
+      "additions": 146,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".github/prompts/agent-update.md",
+      "additions": 10,
+      "deletions": 7,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/workflows/agent-cache-seed.yml",
+      "additions": 71,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".github/workflows/agent-entrypoint.yml",
+      "additions": 46,
+      "deletions": 3,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/workflows/agent-router.yml",
+      "additions": 2,
+      "deletions": 1,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".github/workflows/agent-self-improvement.yml",
+      "additions": 234,
+      "deletions": 0,
+      "changeType": "ADDED"
+    },
+    {
+      "path": ".github/workflows/agent-update.yml",
+      "additions": 2,
+      "deletions": 2,
+      "changeType": "MODIFIED"
+    },
+    {
+      "path": ".gitignore",
+      "additions": 2,
+      "deletions": 0,
+      "changeType": "ADDED"
+    }
+  ],
+  "headRefName": "agent/update-agent-infra-20260801",
+  "labels": [],
+  "mergedAt": null,
+  "number": 9,
+  "reviewDecision": "",
+  "reviews": [],
+  "state": "OPEN",
+  "title": "Update Sepo from 0.4.0 to v0.5.0/5f7d2032080e9c0578d0e4cb3b98b2f695f33547",
+  "updatedAt": "2026-08-01T11:05:58Z",
+  "url": "https://github.com/lean-workspace/sphere-packing-lean/pull/9"
+}
