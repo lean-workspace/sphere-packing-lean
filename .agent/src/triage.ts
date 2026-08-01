@@ -30,6 +30,8 @@ export interface DispatchDecision {
   basePr?: string;
 }
 
+export type TriageMode = "commands" | "agent";
+
 const EXPLICIT_ROUTE_COMMANDS = [
   "answer",
   "implement",
@@ -66,6 +68,19 @@ export interface ImplementIssueMetadata {
 
 function canonicalizeExplicitRouteCommand(route: string): string {
   return route === "chat" ? "answer" : route;
+}
+
+export function parseTriageMode(raw: string | undefined): TriageMode {
+  const normalized = String(raw || "").trim().toLowerCase();
+  if (!normalized || normalized === "commands") {
+    return "commands";
+  }
+  if (normalized === "agent") {
+    return "agent";
+  }
+  throw new Error(
+    `AGENT_TRIAGE_MODE must be one of: commands, agent; got ${normalized}`,
+  );
 }
 
 function normalizeOptionalBasePr(value: unknown): string {
