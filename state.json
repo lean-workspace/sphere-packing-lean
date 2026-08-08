@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "repo_slug": "lean-workspace/sphere-packing-lean",
-  "last_sync_at": "2026-08-07T19:18:40Z",
+  "last_sync_at": "2026-08-08T02:23:47Z",
   "last_activity_at": "2026-08-03T11:39:02Z",
   "cursors": {
-    "issues": "2026-08-07T19:18:40Z",
-    "pulls": "2026-08-07T19:18:40Z",
-    "discussions": "2026-08-07T19:18:40Z",
-    "commits": "2026-08-07T19:18:40Z"
+    "issues": "2026-08-08T02:23:47Z",
+    "pulls": "2026-08-08T02:23:47Z",
+    "discussions": "2026-08-08T02:23:47Z",
+    "commits": "2026-08-08T02:23:47Z"
   },
-  "last_run_url": "https://github.com/lean-workspace/sphere-packing-lean/actions/runs/31210859930",
+  "last_run_url": "https://github.com/lean-workspace/sphere-packing-lean/actions/runs/31234850416",
   "created_at": "2026-07-15T03:39:35.492Z",
-  "updated_at": "2026-08-07T19:18:41.819Z"
+  "updated_at": "2026-08-08T02:23:50.092Z"
 }
