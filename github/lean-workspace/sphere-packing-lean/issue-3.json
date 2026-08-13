@@ -4,7 +4,7 @@
     "login": "app/sepo-agent-app"
   },
   "body": "Use this issue to track Sepo setup for this repository.\n\nThe latest setup status is maintained in the comment below.\n",
-  "closedAt": null,
+  "closedAt": "2026-08-13T09:53:28Z",
   "comments": [
     {
       "id": "IC_kwDOTWyAq88AAAABJ1sh_g",
@@ -20,6 +20,21 @@
       "reactionGroups": [],
       "url": "https://github.com/lean-workspace/sphere-packing-lean/issues/3#issuecomment-4955251198",
       "viewerDidAuthor": true
+    },
+    {
+      "id": "IC_kwDOTWyAq88AAAABOqOXhA",
+      "author": {
+        "login": "github-actions"
+      },
+      "authorAssociation": "NONE",
+      "body": "Closing because this agent issue has had no activity for 30 days.",
+      "createdAt": "2026-08-13T09:53:28Z",
+      "includesCreatedEdit": false,
+      "isMinimized": false,
+      "minimizedReason": "",
+      "reactionGroups": [],
+      "url": "https://github.com/lean-workspace/sphere-packing-lean/issues/3#issuecomment-5278766980",
+      "viewerDidAuthor": false
     }
   ],
   "createdAt": "2026-07-13T06:55:36Z",
@@ -32,8 +47,8 @@
     }
   ],
   "number": 3,
-  "state": "OPEN",
+  "state": "CLOSED",
   "title": "Sepo setup check",
-  "updatedAt": "2026-07-13T06:55:37Z",
+  "updatedAt": "2026-08-13T09:53:28Z",
   "url": "https://github.com/lean-workspace/sphere-packing-lean/issues/3"
 }
